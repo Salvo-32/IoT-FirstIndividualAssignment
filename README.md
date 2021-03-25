@@ -8,19 +8,18 @@ Un pollaio è una costruzione fisica che consente l'allevamento di poultry galli
 
 Per sfruttare al meglio le ore di luce, il tetto dello stabile comprende delle parti/zone in vetro per favorire l'ingresso di luce solare e calore. Unfortunately, nei periodi caldi la temperatura può raggiungere valori molto alti (> 24°C), mettendo in pericolo la vita degli animali. Per raffrescare e mantenere sicura la temperatura (13°C - 24°C), i proprietari impiegano dei ventilatori che forzano l'ingresso di aria fresca dall'esterno verso l'interno abbassando la temperatura. 
 
-Per migliorare la qualità di vita degli animali e la loro produttività, i proprietari avicoli impiegano un sistema di illuminazione artificiale a luce calda (< 3000 K) a bassa valore di illuminance (~ 1,5 lux). Nello specifico l'illuminazione viene attivata durante le ore notturne per mantenere such illuminance. 
+Per migliorare la qualità di vita degli animali e la loro produttività, poultry farmer impiegano un sistema di illuminazione artificiale a luce calda (< 3000 K) a bassa valore di illuminance (~ 1,5 lux). Nello specifico l'illuminazione viene attivata durante le ore notturne per mantenere such illuminance. 
 
-To automate of the above scenario the IoT technologies fit very well, namely implementing set of sensors (temperature and brightness) and a set of actuators (colling fan and led lamp). In particolare, seguendo il paradigma Sense-Think-Act, è possibile rilevare ad intervalli temporali fissati la temperatura tramite il relativo sensore, elaborare e valutare il valore rilevato ed azionare l'attuatore cooling fan. Allo stesso modo è possibile rilevare l'evento assenza di luce attraverso il sensore di luminosità, processare i valori rilevati ed azione l'attuatore relè relativo all'impianto di illuminazione
+To automate of the above scenario the IoT technologies fit very well, namely implementing set of sensors (temperature and brightness) and a set of actuators (colling fan, led lamp, alarm) in the following way. Seguendo il paradigma Sense-Think-Act, è possibile rilevare ad intervalli temporali fissati la temperatura tramite il relativo sensore, elaborare e valutare il valore rilevato ed azionare l'attuatore cooling fan, notificando l'accensione con una sirena. Allo stesso modo è possibile rilevare l'evento assenza di luce attraverso il sensore di luminosità, processare i valori rilevati ed azionere l'attuatore relè relativo all'impianto di illuminazione
 
 ## Assumptions
-- Fan è simulato con un ventilatore 220V
-- Illuminazione a bassa illiminance è implementato con una  Bulb 220v
-- 
+- Per riprodurre il cooling fan viene impiegato un ventilatore domestico a 220V azionato tramite relay module
+- To simulate the lighting behaviour, a 220v bulb is used
 
 
 ### Sensors
 1. Temperature sensor (Thermistor RS PRO 151-237) [RS Components Website](https://it.rs-online.com/web/p/termistori/0151237/).
-    - A thermistor is an electronic component used to measure room low-range temperature. It is a special type of resistor, namely its resistance changes according to room temperature. The one (that is) deployed in this project is a NTC (Negative Temperature Coefficient) thermistor, i.e. the component resistance is inversely proportional to temperature (Image )la resistenza diminuisce man mano che la temperatura aumenta; Applicazioni in misurazioni di bassa temperatura dei sensori di temperatura e soppressione della corrente di spunto. Termistore con coefficiente di temperatura positivo (PTC): la resistenza aumenta con l'aumentare della temperatura; Applicazioni in protezione da sovracorrente.
+    - A thermistor is an electronic component used to measure room low-range temperature. It is a special type of resistor, namely its resistance changes according to room temperature. The one (that is) deployed in this project is a NTC (Negative Temperature Coefficient) thermistor, i.e. the component resistance is inversely proportional to temperature 
     - The following graph shows the qualitative behaviour of the thermistor ![ThermistorGraph](Picture/ThermistorGraph.jpg "ThermistorGraph") 
 2. Brightness sensor (Photoresistor LDR Luna Optoelectronics NSL-19M51) [RS Components Website](https://it.rs-online.com/web/p/ldr-fotoresistenze/9146710/)
 
