@@ -1,7 +1,7 @@
 # IoT First individual assignment - Title - Salvatore FAVA
 
 ## The problem and IoT need
-Un pollaio è una costruzione fisica che consente l'allevamento di poultry galline allo scopo di produrre carni e uova. Oggigiorno, una struttura di piccole dimensioni (< 100 galline) ecosostenibile, prevede principalmente tre fattori:
+A henhouse è una costruzione fisica che consente l'allevamento di poultry galline allo scopo di produrre carni e uova. Oggigiorno, una struttura di piccole dimensioni (< 100 galline) ecosostenibile, prevede principalmente tre fattori:
 - Il libero movimento di tali animali all'interno dello stabile, 
 - L'impiego di luce solare per il riscaldamento
 - L'introduzione di illuminazione artificiale per regolare il ciclo circadiano (ciclo sonno/veglia)
@@ -19,9 +19,12 @@ To automate of the above scenario the IoT technologies fit very well, namely imp
 
 ### Sensors
 1. Temperature sensor (Thermistor RS PRO 151-237) [RS Components Website](https://it.rs-online.com/web/p/termistori/0151237/).
-    - A thermistor is an electronic component used to measure room low-range temperature. It is a special type of resistor, namely its resistance changes according to room temperature. The one (that is) deployed in this project is a NTC (Negative Temperature Coefficient) thermistor, i.e. the component resistance is inversely proportional to temperature 
-    - The following graph shows the qualitative behaviour of the thermistor ![ThermistorGraph](Picture/ThermistorGraph.jpg "ThermistorGraph") 
+    - A thermistor is an electronic component used to measure low-range room temperature. It is a special type of resistor, namely its resistance changes according to room temperature. The one (that is) deployed in this project is a NTC (Negative Temperature Coefficient) thermistor, i.e. the component resistance is inversely proportional to temperature
+    - The following graph shows the qualitative behaviour of the thermistor ![ThermistorGraph](Picture/ThermistorGraph.jpg "ThermistorGraph")
+    - Since temperature is the most critical factor to assure life within the poultry farm, **periodic** measurements (10 mins) are mandatory   
 2. Brightness sensor (Photoresistor LDR Luna Optoelectronics NSL-19M51) [RS Components Website](https://it.rs-online.com/web/p/ldr-fotoresistenze/9146710/)
+    - A photoresistor is an electronic component used to sense the brightness. It is also called LDR (Light Dependent Resistor) because the value of resistance changes according to the light, namely the higher the light is the lower the resistance is
+    - The below graph describes qualitative behaviour of the photoresistor  ![PhotoresistorGraph](Picture/PhotoresistorGraph.jpg "PhotoresistorGraph")
 
 
 ### Actuators
