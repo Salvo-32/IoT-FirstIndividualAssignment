@@ -1,3 +1,24 @@
+Iot First individual assignment-Title-Salvatore Fava
+The problem and Iot need
+A hen house is a building where poultry is bred in order to produce meat and eggs. Nowadays a small eco-friendly structure (with fewer than 100 hens/poultry) has to consider three main factors:
+-the free movement of the animals inside the building;
+- the use of solar light for the heating;
+-the introduction of artificial lighting to regulate the circadian cycle (sleeping and      waking cycle).
+In order to make the most of the sunlight, the roof of the building consists of/includes some parts made of glass to let the solar light and the heat pass. Unfortunately, in hot periods the temperature can reach very high values( more than 24°C) that can be dangerous for the animals. To keep the temperature at safe levels (between 13°C and 24°C) the owners make use of fans that force the entrance of fresh air from the outside to the inside of the building, thus lowering the temperature.
+To improve the quality of the animals’ life and their productivity, poultry farmers use a system of artificial lighting with hot light (less than 3000K) at a low value of illuminance (~1,5 lux). Specifically the illumination is activated at evening hours to keep that illuminance.
+To automate the scenario above the IoT technologies fit very well, in particular with a set of sensors(temperature and brightness) and a set of actuators (cooling fans, led lamps, alarms) used in the following way. Following the ‘Sense-Think-Act’ paradigm it is possible: 1) to take the temperature at fixed intervals and with the pertinent sensor; 
+2)to elaborate the values previously taken and 
+3) to switch the cooling fan actuator on, together with a siren to warn the farmer. 
+In the same way it is possible  
+1)to  point out  the ‘’Absence of light’’ through the brightness sensor; 
+2)to process the values previously taken 
+3)to operate the lighting system actuator.
+
+ASSUMPTIONS
+- A 220V domestic fan is used to reproduce the cooling fan through relay module.
+- To simulate the lighting behaviour , a 220V bulb is used through relay module
+
+
 # IoT First individual assignment - Title - Salvatore FAVA
 
 ## The problem and IoT need
