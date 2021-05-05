@@ -66,10 +66,14 @@ This sensor is wired connected to the STM Nucleo board as in the picture below.
 ## Actuators
 1. Active buzzer (Buzzer RS PRO 171-0898) [RS Components Website](https://it.rs-online.com/web/p/buzzer-magnetici/1710898/)
     - A buzzer, also named beeper, is an electronic devices used to emit a fixed sound whenever it is powered on. 
-    - In details, this project involves an electromagnetic buzzer that lets out a constant tone (85 dB) 
+    - In details, this project involves an electromagnetic buzzer that lets out a constant tone (85 dB)
+    - The actuar is wired connected to the [STM Nucleo](README.md/#STM32-Nucleo-64-development-board-&-RIOT-OS) board as in the picture below.
+    - As described in [The problem and IoT need](README.md/#The-problem-and-IoT-need) section, the whole system makes use of the buzzer to acoustically inform the farmer about high temperature inside the poultry. Remember according the temperature sensor data, the buzzere is turned on or off.    
 2. Relay Module with Optocoupler (8 Channels) [Elegoo Website](https://www.elegoo.com/collections/electronic-component-kits/products/elegoo-8-channel-relay-module-kit?variant=32467576324144)
     - The relay module is an electrically operated switch that allows you to turn on or off a circuit with a voltage and/or current that is much higher than a microcontroller could handle. 
     - There is no connection between the low voltage circuit operated by the microcontroller and the high power circuit. The relay protects each circuit from the other.
+    - This sensor is wired connected to the [STM Nucleo](README.md/#STM32-Nucleo-64-development-board-&-RIOT-OS) board as in the picture below.
+    - As described in [The problem and IoT need](README.md/#The-problem-and-IoT-need) section, first relay channel is devoted to command 
 
 ### STM32 Nucleo-64 development board & RIOT-OS
 The core of the whole system is [STM NUCLEO-F401RE](https://www.st.com/en/evaluation-tools/nucleo-f401re.html) development board. It allows to build a prototype of the real system within an affordable all-in-one platform (ST-LINK debugger/programmer are included).
