@@ -82,7 +82,8 @@ To develop the software needed to manage and process all the data of the infrast
 [RIOT](https://www.riot-os.org/)  is a free, open source operating system developed by a grassroots community gathering companies, academia, and hobbyists, distributed all around the world. RIOT supports most low-power IoT devices and microcontroller architectures (32-bit, 16-bit, 8-bit). RIOT aims to implement all relevant open standards supporting an Internet of Things that is connected, secure, durable & privacy-friendly.
 
 
-## Network architecture
+## What are the connected components, the protocols to connect them and the overall IoT architecture?
+### Network
 
 ## Sources
 * https://www.agraria.org/polli/ricoveri.htm
