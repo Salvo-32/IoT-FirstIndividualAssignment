@@ -87,12 +87,27 @@ To develop the software needed to manage and process all the data of the infrast
 
 ## What are the connected components, the protocols to connect them and the overall IoT architecture?
 ### Network diagram (Physical devices and Protocols)
-The following diagram depicts all the physical devices employed in this project and the relative network protocols used to interconnect each other
+The following diagram depicts all the physical devices employed in this project and relative network protocols used to interconnect each other
 ![PhysicalNetworkDiagram](Picture/PhysicalNetworkDiagram.jpg "PhysicalNetworkDiagram")
 
+In order to **clearly understand** how the physical devices and software components work together look at paragraph [Overall high-level architecture diagram of the whole system](README.md/#Overall-high-level-architecture-diagram-of-the-whole-system)
+
 ### Software components
-* RiotOS running inside the above mentioned ST Nucleo board that executes the C application with MQTT-SN client: [main.c](main.c)
-* Ubuntu 20.04 LTS running on top of Laptop, which  
+This list goes deeper through the software components underlying the above-mentioned hardware architecture, from left most devices to the bottom right devices.
+* RiotOS running inside the ST Nucleo board that executes a C application with an MQTT-SN client: [main.c](main.c)
+    * The nucleo board make use of network connectivity via the USB
+    * Please, for a datailed description of the C application working you may refer to source code [main.c](main.c) 
+
+* Ubuntu 20.04 LTS running on top of a laptop, which acts as both MQTT-SN broker and MQTT broker with TLS
+    * The former receives MQTT-SN messages from the Nucleo MQTT-SN client [emCute](http://api.riot-os.org/group__net__emcute.html). 
+In particular the former is [Mosquitto RSMB: Really Small Message Broker](https://github.com/eclipse/mosquitto.rsmb), an implementation of the MQTT and MQTT-SN protocols. The main reason for using RSMB over the main Mosquitto codebase is that Mosquitto doesn't currently have support for the MQTT-SN protocol. Unfortunately, **RSMB does not support TLS** for MQTT, which insted it is mandatory to connect to AWS IoT Core, so another software intermediary is needed **Eclipse Mosquitto broker**.
+        * As well it acts as local bridge between itself and the Eclipse Mosquitto MQTT broker. For further information, it is strongly recommended to read the [RSMB configuration file](RSMB_config.conf)  
+    * The latter is [Eclipse Mosquitto™](https://mosquitto.org/) - An open source MQTT broker compliant with TLS. It ensusres a secure connection with AWS web services, in particular with AWS Iot Core. Pay attention it acts only as bridge between the itself and AWS IoT MQTT Broker using certificate-based authentication (X509). 
+        *  For further information, it is strongly recommended to read the [Eclipse Mosquitto bridge file](EclipseMosquitto_config.conf). This file specifies the AWS IoT Core endpoint address, then which topics are bridged and in what fashion. The bottom of the file contains the specification to retrieve the Certificates for TLS authentication.
+
+* AWS web services, in particular [AWS IoT Core](https://aws.amazon.com/iot/?nc1=h_ls). This one lets connected IoT devices easily and securely interact with cloud applications and other devices.  
+
+In order to clearly understand how the physical devices and software components work together look at paragraph [Overall high-level architecture diagram of the whole system](README.md/#Overall-high-level-architecture-diagram-of-the-whole-system)
 
 ### Overall high-level architecture diagram of the whole system
 
