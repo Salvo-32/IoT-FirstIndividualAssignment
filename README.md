@@ -13,13 +13,14 @@ To improve the quality of the animals’ life and their productivity, poultry fa
 
 ### IoT need
 To automate the scenario above the IoT technologies fit very well, in particular with a set of sensors (temperature and brightness) and a set of actuators (cooling fans, led lamps, alarm/buzzer) used in the following way. Following the ‘Sense-Think-Act’ paradigm it is possible: 
-    1. to measure the temperature at fixed intervals and with the pertinent sensor; 
-    2. to elaborate the values previously taken 
-    3. to switch the cooling fan actuator on, together with a siren to warn the farmer about high temperature. 
+1. to measure the temperature at fixed intervals and with the pertinent sensor; 
+2. to elaborate the values previously taken 
+3. to switch the cooling fan actuator on, together with a siren to warn the farmer about high temperature. 
+
 In the same way it is possible:
-    1. to point out  the ‘Absence of light’ through the brightness sensor; 
-    2. to process the values previously taken 
-    3. to operate the lighting system actuator
+1. to point out  the ‘Absence of light’ through the brightness sensor; 
+2. to process the values previously taken 
+3. to operate the lighting system actuator
 
 ### Assumptions
 - A 220V domestic fan is used to reproduce the cooling fan through relay module.
@@ -84,6 +85,8 @@ The core of the whole system is [STM NUCLEO-F401RE](https://www.st.com/en/evalua
 To develop the software needed to manage and process all the data of the infrastructure, the STM board relies on the **RIOT operating system**.
 [RIOT](https://www.riot-os.org/)  is a free, open source operating system developed by a grassroots community gathering companies, academia, and hobbyists, distributed all around the world. RIOT supports most low-power IoT devices and microcontroller architectures (32-bit, 16-bit, 8-bit). RIOT aims to implement all relevant open standards supporting an Internet of Things that is connected, secure, durable & privacy-friendly.
 
+### Electrical circuit
+The following picture shows how to connect all the above-mentioned components, using a breadboard and wires. Please, you have to follow the same pins of the nucleo board to get working circuit! [HenhouseCircuit](Picture/Circuit.jpg)
 
 ## What are the connected components, the protocols to connect them and the overall IoT architecture?
 ### Network diagram (Physical devices and Protocols)
