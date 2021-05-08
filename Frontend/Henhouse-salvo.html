@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+            <title>Henhouse - salvo</title>
+        </head>
+        
+        <body>
+            <h1>Henhouse - Salvo</h1>
+            <h2> Sensors </h2>
+            <h3> Last received values </h3>
+            <p> Last temperature in CELSIUS is: 22 </p>
+            <p> Last light in LUX is: 19 </p>
+            <br>
+            <h3> Aggregated values </h3>
+            <p> Average temperature in CELSIUS is: 22.0 </p>
+            <p> Average light in LUX is: 19.5625 </p>
+            <br>
+            <p> Minimum temperature in CELSIUS is: 22 </p>
+            <p> Minimum light in LUX is: 18 </p>
+            <br>
+            <p> Max temperature in CELSIUS is: 22 </p>
+            <p> Max light in LUX is: 20 </p>
+            
+            <h3> All received values during last hour (2021-05-05 14:19:15 - 2021-05-05 15:19:15) </h3>
+            <p> Temperature: [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 
+22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 
+22, 22, 22, 22, 22] </p>
+            <p> Light: [20, 19, 20, 20, 20, 20, 20, 19, 18, 20, 20, 19, 20, 19, 20, 19] </p>
+            <br> <br>
+    
+            <h2> Actuator</h2>
+            <h3>Buzzer - Alarm</h3>
+            <button type="button" onclick="remoteCommand(1)">Turn ON</button>
+            <button type="button" onclick="remoteCommand(2)">Turn OFF</button>
+            
+            <h3>Fan</h3>
+            <button type="button" onclick="remoteCommand(3)">Turn ON</button>
+            <button type="button" onclick="remoteCommand(4)">Turn OFF</button>
+            
+            <h3>Lamp</h3>
+            <button type="button" onclick="remoteCommand(5)">Turn ON</button>
+            <button type="button" onclick="remoteCommand(6)">Turn OFF</button>
+    
+            <script src="Henhouse-salvo_files/aws-sdk-2.js"></script>
+            <script type="text/javascript">
+                // Initialize the Amazon Cognito credentials provider
+                AWS.config.region = 'us-east-1'; // Region
+                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                    IdentityPoolId: 'us-east-1:229ea7b7-435c-45a4-973a-8ef8cbfb3913',
+                });            
+                
+                function remoteCommand(thing){
+                    var iotdata = new AWS.IotData(
+                        {
+                            endpoint: 'a2ltfi1iwu8oyf-ats.iot.us-east-1.amazonaws.com',
+                            apiVersion: '2015-05-28'
+                        }
+                    );
+                    
+                    if (thing == 1){
+                        var params = {
+                            topic: 'actuator/buzzer', /* required */
+                            payload: '{ "value": "RemoteON" }',
+                            qos: '0'
+                        };
+                    }
+                    else if (thing == 2){
+                        var params = {
+                            topic: 'actuator/buzzer', /* required */
+                            payload: '{ "value": "RemoteOFF" }',
+                            qos: '0'
+                        };
+                    }
+                    else if (thing == 3){
+                        var params = {
+                            topic: 'actuator/fan', /* required */
+                            payload: '{ "value": "RemoteON" }',
+                            qos: '0'
+                        };
+                    }
+                    else if (thing == 4){
+                        var params = {
+                            topic: 'actuator/fan', /* required */
+                            payload: '{ "value": "RemoteOFF" }',
+                            qos: '0'
+                        };
+                    }                    
+                    if (thing == 5){
+                        var params = {
+                            topic: 'actuator/lamp', /* required */
+                            payload: '{ "value": "RemoteON" }',
+                            qos: '0'
+                        };
+                    }
+                    else if (thing == 6){
+                        var params = {
+                            topic: 'actuator/lamp', /* required */
+                            payload: '{ "value": "RemoteOFF" }',
+                            qos: '0'
+                        };
+                    }
+                    
+                    iotdata.publish(
+                        params, 
+                        function(err, data) {
+                            if (err){
+                                console.log(err, err.stack); // an error occurred
+                                alert("Error! Command not executed");
+                            } 
+                            else{
+                                console.log(data);           // successful response
+                                alert("OK! Remote command sent");
+                            }     
+                        }
+                    );
+                }
+            </script>
+        
+     </body></html>
