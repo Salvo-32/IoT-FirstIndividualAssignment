@@ -90,7 +90,7 @@ To develop the software needed to manage and process all the data of the infrast
 The following diagram depicts all the physical devices employed in this project and relative network protocols used to interconnect each other
 ![PhysicalNetworkDiagram](Picture/PhysicalNetworkDiagram.jpg "PhysicalNetworkDiagram")
 
-In order to **clearly understand** how the physical devices and software components work together look at paragraph [Overall high-level architecture diagram of the whole system](README.md/#Overall-high-level-architecture-diagram-of-the-whole-system)
+In order to **clearly understand** how the physical devices and software components work together look at paragraph [Overall high-level architecture diagram of the whole system](README.md/#Overall-high-level-architecture-diagram-of-Software-components)
 
 ### Software components
 Here there is a complete list of all software components underlying the above-mentioned hardware architecture, from left most devices to the bottom right devices.
@@ -134,9 +134,10 @@ Ubuntu 20.04 LTS runs on top of a laptop, which acts as both MQTT-SN broker and 
         * Before you move on, it is mandatory to set up the AWS S3 environment to host a public-accessible web page using the official guide [Hosting a static website using Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html)
         * A deeper analysis of website's framework and how it is regenerated with updated values from the sensor is provided in the next two sections   
 
-    * [AWS Lambda](https://aws.amazon.com/lambda/) is a serverless compute service that lets you run code without provisioning or managing servers, creating workload-aware cluster scaling logic, maintaining event integrations, or managing runtimes.
-        * This project involves a Python Lambda function (see [lambda_function.py source code](AWS_Backend/lambda_function.py)) that is triggered by the two above mentioned IoT Rules.
-        * The goal of this function is to dinamically generate the [Web dashboard](README.md/Web-dashboard), in spite of the concept of dynamic web-page is not provided by AWS S3. Every time the lambda is triggered, overwrites a new html file (i.e. html web dashboard) in the S3 public bucket containing the latest value retrieved from the DynamoDB table in the last hour, the aggregated values (min, max, avg) and a set of buttons to enable/disable the actuator. 
+###### AWS Lambda
+[AWS Lambda](https://aws.amazon.com/lambda/) is a serverless compute service that lets you run code without provisioning or managing servers, creating workload-aware cluster scaling logic, maintaining event integrations, or managing runtimes.
+    * This project involves a Python Lambda function (see [lambda_function.py source code](AWS_Backend/lambda_function.py)) that is triggered by the two above mentioned IoT Rules.
+    * The goal of this function is to dinamically generate the [Web dashboard](README.md/#Web-dashboard), in spite of the concept of dynamic web-page is not provided by AWS S3. Every time the lambda is triggered, overwrites a new html file (i.e. html web dashboard) in the S3 public bucket containing the latest value retrieved from the DynamoDB table in the last hour, the aggregated values (min, max, avg) and a set of buttons to enable/disable the actuator. 
         * The lambda function makes use of [Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html), which is the AWS SDK for Python to create, configure, and manage AWS services (in this scenario DynamoDB and S3) 
         * Initially the lambda queries the DynamoDB table via the Boto3 using a dynamodb client. This retrieves all the values since last hour, then it processes the minimum, the maximum and the average values for the temperature and the light. After that it puts all the elements inside a string containing HTML framework of the web dashboard and finally generates a new S3 object (its body is the string containg HTML code) inside the S3 bucket via a Boto3 S3 client.
         * The lambda function puts as well javascript code inside the HTML file to remotely enable/disable the actuators.
@@ -147,7 +148,8 @@ Ubuntu 20.04 LTS runs on top of a laptop, which acts as both MQTT-SN broker and 
             * To correctly configure both Amazon Cognito and AWS SDK for JavaScript, please refers to this [AWS official tutorial](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-browser.html).
             * As you can see both from the pictures and the [lambda source code](AWS_Backend/lambda_function.py) the js script consists of three key elements: inclusion of the ```AWS SDK for JavaScript``` as external reference, ```AWS.CognitoIdentityCredentials``` method grants a secure access to AWS services and ```AWS.IotData.Publish``` allows pubblication of MQTT message according to the desired topic.  
     
-* Web dashboard is an HTML/JS file hosted by an S3 bucket that provide the following functionalities:
+#### Web dashboard 
+Web dashboard is an HTML/JS file hosted by an S3 bucket that provide the following functionalities:
     * Display latest values from the two sensors
     * Display aggregated values from the two senors (min, max, average)
     * Display last hour values from the two sensors
@@ -155,10 +157,10 @@ Ubuntu 20.04 LTS runs on top of a laptop, which acts as both MQTT-SN broker and 
     * Link of the web dashboard is [http://henhouse-salvo.s3-website-us-east-1.amazonaws.com/](http://henhouse-salvo.s3-website-us-east-1.amazonaws.com/)
     * A **static-copy** (i.e. a textual snap-shot) of the web dashboard is available also inside this repository [here](Frontend/Henhouse-salvo.html)  
 
-In order to clearly understand how the physical devices and software components work together look at paragraph [Overall high-level architecture diagram of the whole system](README.md/#Overall-high-level-architecture-diagram-of-the-whole-system)
+In order to clearly understand how the physical devices and software components work together look at paragraph [Overall high-level architecture diagram of the whole system](README.md/#Overall-high-level-architecture-diagram-of-Software-components)
 
-### Overall high-level architecture diagram of the whole system
-
+### Overall high-level architecture diagram of Software components
+![OverallArchitecture](Picture/OverallArchitecture.jpg)
 
 ## Sources
 * https://www.agraria.org/polli/ricoveri.htm
