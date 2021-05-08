@@ -94,33 +94,43 @@ In order to **clearly understand** how the physical devices and software compone
 
 ### Software components
 Here there is a complete list of all software components underlying the above-mentioned hardware architecture, from left most devices to the bottom right devices.
-* [RiotOS](README.md/#STM32-Nucleo-64-development-board-and-RIOT-OS)) runs inside the ST Nucleo board that executes a C application with a MQTT-SN client: [main.c](main.c)
+
+#### RiotOS and C-application 
+[RiotOS](README.md/#STM32-Nucleo-64-development-board-and-RIOT-OS)) runs inside the ST Nucleo board that executes a C application with a MQTT-SN client: [main.c](main.c)
     * The C application retrieves periodically data from the two sensors using two different threads, then deploys the 'think' phase of **sense-think-act** paradigm in two ways. First it encapsulates the data into MQTT JSON messages and sends them via MQTT-SN client [emCute](http://api.riot-os.org/group__net__emcute.html) to the RSMB MQTT-S broker. Second it performs comparison between the sampled data for light and temperature and the relative default thresholds. In the end, according to the results of the 'think' phase (the comparisons) it 'acts' enabling or disabling appropriate actuators (buzzer and cooling fan or lamp)
     * It is also important to notice the aplication is able to 'act' in an alternative fashion. It allows to enable or disable each actuator by receiving MQTT messages from the outside, i.e from the remote command of [Web dashboard](README.md/#Web-dashboard)  
     * Please, for a datailed description of the C application working and **how to setup the whole C application** you may refer to source code [main.c](main.c) 
 
-* Ubuntu 20.04 LTS runs on top of a laptop, which acts as both MQTT-SN broker and MQTT broker with TLS
-    * The former receives MQTT-SN messages from the MQTT-SN client [emCute](http://api.riot-os.org/group__net__emcute.html). 
-In particular the former is [Mosquitto RSMB: Really Small Message Broker](https://github.com/eclipse/mosquitto.rsmb), an implementation of the MQTT and MQTT-SN protocols. The main reason for using RSMB over the main Mosquitto codebase is that Mosquitto doesn't currently have support for the MQTT-SN protocol. Unfortunately, **RSMB does not support TLS** for MQTT, which instead it is a mandatory requirement to connect to AWS IoT Core, so another software intermediary is needed **Eclipse Mosquitto broker**.
-        * In this way, RSMB also acts as local bridge between itself and the Eclipse Mosquitto MQTT broker. For further information, it is strongly recommended to read the [RSMB configuration file](RSMB_config.conf)  
+#### Ubuntu 20.04 LTS + RSMB MQTT-S broker + Eclipse MQTT TLS broker 
+Ubuntu 20.04 LTS runs on top of a laptop, which acts as both MQTT-SN broker and MQTT broker with TLS
+    * The former is [Mosquitto RSMB: Really Small Message Broker](https://github.com/eclipse/mosquitto.rsmb), an implementation of the MQTT and MQTT-SN protocols. The main reason for using RSMB over the main Mosquitto codebase is that Mosquitto doesn't currently have support for the MQTT-SN protocol. Unfortunately, **RSMB does not support TLS** for MQTT, which instead it is a mandatory requirement to connect to AWS IoT Core, so another software intermediary is needed **Eclipse Mosquitto broker**.
+        * The former receives MQTT-SN messages from the MQTT-SN client [emCute](http://api.riot-os.org/group__net__emcute.html) of C-application   
+        * RSMB also acts as local bridge between itself and the Eclipse Mosquitto MQTT broker. For further information, it is strongly recommended to read the [RSMB configuration file](RSMB_config.conf)  
     * The latter is [Eclipse Mosquitto™](https://mosquitto.org/), an open source MQTT broker compliant with TLS. Pay attention it acts as **MQTT-SN/MQTT transparent bridge**, namely it subscribes to the default set of topics on MQTT-SN RSMB broker and forward all messages to AWS MQTT Broker, using certificate-based authentication (X509). 
         * For further information, it is strongly recommended to read the [Eclipse Mosquitto bridge file](EclipseMosquitto_config.conf). This file specifies the AWS IoT Core endpoint address, then which topics are bridged and in what fashion. The bottom of the file contains the specification to retrieve the Certificates for TLS authentication.
 
-* [AWS web services](https://aws.amazon.com/?nc1=h_ls) by Amazon provides compute power, database storage, content delivery, cloud functionality to build sophisticated IoT applications with increased flexibility, scalability and reliability. In particulare the ones deployed inside the project are:
-    * [AWS IoT Core](https://aws.amazon.com/iot/?nc1=h_ls). This one lets connected the IoT devices easily and securely interact with cloud applications as well as makes it easy to securely register, organize, monitor, and remotely manage IoT devices. **In detail** AWS IoT Core includes the MQTT broker that the above-mentioned Eclipse Mosquitto connects to. Therefore AWS MQTT broker receives MQTT JSON messages from Eclipse Mosquitto transparent bridges and acts according to the following [IoT Rule](https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html). These rules give the IoT devices the ability to interact with AWS services, in particular they exploit an SQL-like syntax to query the received MQTT topic stream and then take desired actions.
-        * Before you look at the two rules, it is fundamental to learn how these ones are created. A simple guide is provided by this [Youtbe Video](https://www.youtube.com/watch?v=JD16rVBUF-8). 
+#### AWS Webservices
+[AWS web services](https://aws.amazon.com/?nc1=h_ls) by Amazon provides compute power, database storage, content delivery, cloud functionality to build sophisticated IoT applications with increased flexibility, scalability and reliability. In particulare the ones deployed inside the project are the listed below. 
+
+##### AWS IoT Core
+[AWS IoT Core](https://aws.amazon.com/iot/?nc1=h_ls) lets connected the IoT devices easily and securely interact with cloud applications as well as makes it easy to securely register, organize, monitor, and remotely manage IoT devices. 
+    **In detail** AWS IoT Core includes the MQTT broker that the above-mentioned Eclipse Mosquitto connects to. Therefore AWS MQTT broker receives MQTT JSON messages from Eclipse Mosquitto transparent bridges and acts according to the following [IoT Rule](https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html). These rules give the IoT devices the ability to interact with AWS services, in particular they exploit an SQL-like syntax to query the received MQTT topic stream and then take desired actions.
+    * Before you look at the two rules, it is fundamental to learn how these ones are created. A simple guide is provided by this [Youtbe Video](https://www.youtube.com/watch?v=JD16rVBUF-8). 
         * Rule01 - Insert the **light** value message into the HenhouseDbTable's DynamoDB table and perform a Lambda function: Lambda1.py (For a better explanation, you may refer to AWS Lambda section] below)
         ![Rule01](Picture/IoTRule01.png "IoTRule01")
         * Rule02 - Insert the **temperature** value message into the HenhouseDbTable's DynamoDB table and perform a Lambda function: Lambda1.py (For a better explanation, you may refer to AWS Lambda section below)
         ![Rule02](Picture/IoTRule02.png "IoTRule01")
         
-    * [AWS DynamoDB](https://aws.amazon.com/dynamodb/) is a fast and flexible NoSQL database service for any scale. DynamoDB is used to store the MQTT message from the real above-mentioned sensors into a table, i.e. the *HenhouseDbTable*. The table consists of these fields: ```Id``` is the partition key that stores arrival timestamp for each entries, ```Topic``` is the sort key to save the mqtt topic and the ```Val``` is a string  to store the actual value (LUX or Celsius) from the sensor
-        * In order to create the table and properly set it, you can follow the [official aws documentation](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SampleData.CreateTables.html). It provides a ***simple step-by-step tutorial*** to build up the desired working table.   
+##### AWS DynamoDB
+[AWS DynamoDB](https://aws.amazon.com/dynamodb/) is a fast and flexible NoSQL database service for any scale. 
+    * In this project DynamoDB is used to store the MQTT message from the real above-mentioned sensors into a table, i.e. the *HenhouseDbTable*. The table consists of these fields: ```Id``` is the partition key that stores arrival timestamp for each entries, ```Topic``` is the sort key to save the mqtt topic and the ```Val``` is a string  to store the actual value (LUX or Celsius) from the sensor
+    * In order to create the table and properly set it, you can follow the [official aws documentation](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SampleData.CreateTables.html). It provides a ***simple step-by-step tutorial*** to build up the desired working table.   
         * The picture below is a sample of the table 
         ![DynamoDBTable](Picture/DynamoDBTable.png)
 
-    * [AWS S3](https://aws.amazon.com/s3/) stands for Amazon Simple Storage Service and is an object storage service that offers industry-leading scalability, data availability, security, and performance.
-        * In this project S3 acts as Web Hosting service to host 'static' website, i.e. the [Web dashboard](README.md/Web-dashboard).
+##### AWS S3
+[AWS S3](https://aws.amazon.com/s3/) stands for Amazon Simple Storage Service and is an object storage service that offers industry-leading scalability, data availability, security, and performance.
+     * In this project S3 acts as Web Hosting service to host 'static' website, i.e. the [Web dashboard](README.md/#Web-dashboard).
         * Before you move on, it is mandatory to set up the AWS S3 environment to host a public-accessible web page using the official guide [Hosting a static website using Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html)
         * A deeper analysis of website's framework and how it is regenerated with updated values from the sensor is provided in the next two sections   
 
@@ -131,7 +141,7 @@ In particular the former is [Mosquitto RSMB: Really Small Message Broker](https:
         * Initially the lambda queries the DynamoDB table via the Boto3 using a dynamodb client. This retrieves all the values since last hour, then it processes the minimum, the maximum and the average values for the temperature and the light. After that it puts all the elements inside a string containing HTML framework of the web dashboard and finally generates a new S3 object (its body is the string containg HTML code) inside the S3 bucket via a Boto3 S3 client.
         * The lambda function puts as well javascript code inside the HTML file to remotely enable/disable the actuators.
         * For a secure use of the script and to access the AWS web services from the outside, it is foundamental to employ [Amazon Cognito](https://aws.amazon.com/cognito/) and [AWS SDK for JavaScript](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/). The following picture shows the idea 
-            ![JsCognitoIOT](Picture/JsCognitoIOT.jpg, "JsCognitoIOT")
+            ![JsCognitoIOT](Picture/JsCognitoIOT.jpg)
             * Amazon Cognito lets you add user sign-up, sign-in, and access control to your web and mobile apps quickly and easily. It provides a restriced access key, the one show into the lambda function, to access the IoT devices 
             * AWS SDK for JavaScript simpliﬁes use of AWS Services by providing a set of libraries that are consistent and familiar for JavaScript developers. 
             * To correctly configure both Amazon Cognito and AWS SDK for JavaScript, please refers to this [AWS official tutorial](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-browser.html).
