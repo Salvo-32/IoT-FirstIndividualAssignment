@@ -86,7 +86,7 @@ To develop the software needed to manage and process all the data of the infrast
 [RIOT](https://www.riot-os.org/)  is a free, open source operating system developed by a grassroots community gathering companies, academia, and hobbyists, distributed all around the world. RIOT supports most low-power IoT devices and microcontroller architectures (32-bit, 16-bit, 8-bit). RIOT aims to implement all relevant open standards supporting an Internet of Things that is connected, secure, durable & privacy-friendly.
 
 ### Electrical circuit
-The following picture shows how to connect all the above-mentioned components, using a breadboard and wires. Please, you have to follow the same pins of the nucleo board to get working circuit! [HenhouseCircuit](Picture/Circuit.jpg)
+The following picture shows how to connect all the above-mentioned components, using a breadboard and wires. Please, you have to follow the same pins of the nucleo board to get working circuit ![HenhouseCircuit](Picture/Circuit.jpg)
 
 ## What are the connected components, the protocols to connect them and the overall IoT architecture?
 ### Network diagram (Physical devices and Protocols)
