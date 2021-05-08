@@ -1,4 +1,4 @@
-# IoT First individual assignment - Title - Salvatore FAVA
+# IoT First individual assignment - Henhouse - Salvatore FAVA
 
 ## What is the problem and why do you need IoT?
 ### The problem 
