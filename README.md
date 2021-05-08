@@ -49,7 +49,7 @@ By the use of the above-mentioned temperature sensor,an analog signal relative t
 | Max operative temperature  | +150°C |
 | Min operative temperature  | -80°C |
 
-This sensor is wired connected to the [STM Nucleo](README.md/#STM32-Nucleo-64-development-board-&-RIOT-OS) board as in the picture below. 
+This sensor is wired connected to the [STM Nucleo](README.md/#STM32-Nucleo-64-development-board-and-RIOT-OS) board as in the picture below. 
 **Data analysis first step** The board collects the analog signal every **10 minutes** and samples it using the internal 12-bit ADC (Analog-Digital Converter). Finally, the digital sample is converted in **°C** using the ``` adc_util_map() ``` function inside the ``` analog_util.h ``` offered by the RIOT OS.
 
 By the use of the above-mentioned brightness sensor, an analog signal relative to the real room light is produced with respect to the **datasheet** specifications:
@@ -70,7 +70,7 @@ This sensor is wired connected to the STM Nucleo board as in the picture below.
 1. Active buzzer (Buzzer RS PRO 171-0898) [RS Components Website](https://it.rs-online.com/web/p/buzzer-magnetici/1710898/)
     - A buzzer, also named beeper, is an electronic devices used to emit a fixed sound whenever it is powered on. 
     - In details, this project involves an electromagnetic buzzer that lets out a constant tone (85 dB)
-    - The actuator is wired connected to the [STM Nucleo](README.md/#STM32-Nucleo-64-development-board-&-RIOT-OS) board as in the picture below.
+    - The actuator is wired connected to the [STM Nucleo](README.md/#STM32-Nucleo-64-development-board-and-RIOT-OS) board as in the picture below.
     - As described in [The problem and IoT need](README.md/#The-problem) section, the whole system makes use of the buzzer to acoustically inform the farmer about high temperature inside the poultry. Remember according the temperature sensor data, the buzzer is turned on or off.    
 2. Relay Module with Optocoupler (8 Channels) [Elegoo Website](https://www.elegoo.com/collections/electronic-component-kits/products/elegoo-8-channel-relay-module-kit?variant=32467576324144)
     - The relay module is an electrically operated switch that allows you to turn on or off a circuit with a voltage and/or current that is much higher than a microcontroller could handle. 
