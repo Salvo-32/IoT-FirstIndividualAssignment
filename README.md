@@ -6,8 +6,8 @@ Each assignment deals with different IoT technologies learnt during the above me
 
 For further information about the assignments refer to the links below
 1. [First assignment](./FirstAssignment)
-2. [Second assignment](./SecondAssignment/README.md)
-3. [Third assignment](./ThirdAssignment/README.md)
+2. [Second assignment](./SecondAssignment)
+3. [Third assignment](./ThirdAssignment)
 
 ## IoT-Lab Quotation
 Both the second and third assignments involve the use of FIT IoT-LAB: 
