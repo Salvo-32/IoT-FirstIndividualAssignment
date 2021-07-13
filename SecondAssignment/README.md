@@ -17,9 +17,31 @@ The following points address the new structure/diagram of the IoT system and its
 ## What are the connected components, the protocols to connect them and the overall IoT architecture
 ### Network diagram (Physical devices and Protocols)
 
-
 ### Overall high-level architecture diagram of Software components
 ![OverallArchitecture](./Picture/OverallArchitecture.jpg)
 
+## How do you measure the performance of the system
+Each of the following points measure the performance of the whole IoT system in term of Network performance and Energy efficiency as the number of wireless node increase and their physical locations vary. 
+### 5 wireless nodes as in series network topology 
+#### Network performance
+
+#### Energy consumption
+
+### 5 wireless nodes as mesh network topology 
+#### Network performance
+
+#### Energy consumption
+
+### 10 wireless nodes as in-series network topology 
+#### Network performance
+
+#### Energy consumption
+
+### 10 wireless nodes as mesh network topology
+#### Network performance
+
+#### Energy consumption
+
+### Conclusion
 
 
