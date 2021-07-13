@@ -5,9 +5,9 @@ The repository contains three individual assignments that shares the same envirn
 Each assignment deals with different IoT technologies learnt during the above mentioned IoT course.
 
 For further information about the assignments refer to the links below
-1. [First assignment](./First-Assignment/)
-2. [Second assignment](./Second-Assignment/)
-3. [Third assignment](./Third-Assignment/)
+1. [First assignment](./First-Assignment/README.md)
+2. [Second assignment](./SecondAssignment/README.md)
+3. [Third assignment](./ThirdAssignment/README.md)
 
 ## IoT-Lab Quotation
 Both the second and third assignments involve the use of FIT IoT-LAB: 
