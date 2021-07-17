@@ -13,7 +13,7 @@ For further information about the assignments refer to the links below
 Both the second and third assignments involve the use of FIT IoT-LAB: 
 > an accurate and efficient scientific tool, built to help and foster the design, development, tuning, and experimentation of large scale IoT applications
 
-It is employed to prove the ability of scaling the first individual assignment idea using a bigger number of **real** boards, and at the same time to test the performance.
+It is employed to prove the ability of scaling the first individual assignment idea using a bigger number of **real** boards, meanwhile to test the performance on a large scale.
 
 [FIT IoT-LAB: A Large Scale Open Experimental IoT Testbed](https://www.iot-lab.info/docs/getting-started/terms-of-use/#) - C. Adjih, E. Baccelli, E. Fleury, G. Harter, N. Mitton, T. Noel, R. Pissard-Gibollet, F. Saint-Marcel, G. Schreiner, J. Vandaele, T. Watteyne in IEEE World Forum on Internet of Things (IEEE WF-IoT), Milan, Italy, December 2015
 
