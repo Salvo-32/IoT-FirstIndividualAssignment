@@ -40,7 +40,7 @@ Deploying multiple [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/
 The following diagram depicts all the physical devices employed in this project and relative network protocols used to interconnect each other
 ![PhysicalNetworkDiagram](./Picture/PhysicalNetworkDiagram.jpg)
 
-**NOTE** Components  of the first individual assignment are not taken into account in the description below. (Look at it Further information here)
+**NOTE** Despite the diagram above depicts components of the first individual assignment, these are not taken into account in the description below. (Look at the appropriate [document](/FirstAssignment/README.md/####-Network-diagram-(Physical-devices-and-Protocols)))
 
 In order to clearly understand how the physical devices and software components work together look at paragraph Overall high-level architecture diagram of the whole system
 ### Overall high-level architecture diagram of Software components
