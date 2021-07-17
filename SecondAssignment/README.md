@@ -13,9 +13,19 @@ The following points address the new structure/diagram of the IoT system and its
 ## How is the deployment of ***multiple sensors*** going to affect the IoT platform
 Deploying multiple [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/) boards, each one providing the **same** sensors (temperature and light) as the ones of the first individual assignment, sureley implies a bigger amount of data available. This aspect leads several advantages and disadvantages.
 ### Advantages of use multiple overlapping sensors
-1. Temperature and light are [scalar physical quantities](https://en.wikipedia.org/wiki/Scalar_(physics)) therefore they change according to environmental position, namely with respect to the point in which the sensor performs measurement. Several differetn sensors spread all over the building surface on Saclay site provide the best average temperature for the entire building. In this Data quality
-2. Fault tolerance
-3. Energy efficiency 
+1. Data quality 
+ * Temperature and light are [scalar physical quantities](https://en.wikipedia.org/wiki/Scalar_(physics)) (punctiform) therefore they change according to environmental position, namely with respect to the point in which the sensor performs measurement. 
+ * In particular employing 22 different sensors (11  for temperature and 11 for light, belonging to different boards) spread all over the building surface on Saclay site, are better than using the ones from a single board.
+ * This architecture allows to carry out the average temperature and brightness of the entire environment (not only physical quantity from a limited portion of the environment as in the previous assignment). 
+ * It is possible to get more accurate values for both quantites that are very very close to the real values
+3. Fault tolerance. 
+ * Exploiting different boards, each one with its set of sensors, grants continuity and availability of temperature and light values even if a set of sensors/boards stops working or carries out abnormal data due to mulfunctioning. 
+ * For example, right now (17/06/2021 16:00) on Saclay site ```m3-3.saclay``` board is **unavailable/suspected**, as you can see from the picture below: ![UnavailableBoard](Picture/M3-Saclay-Disposition2.jpg "UnavailableBoard"). If the IoT system relies on that specific device then no data will be carried out, the web-dashboard will result always empty and the whole system will be useless. 
+ * Moreover the possibility to perform aggregated computations for a specific physical property through data coming from different positions at the same time protect against wrong measurement values, namely if you can trust the majority of the sensor values then even if there are abnormal values, the outcome is still a reliable one.
+6. Energy efficiency
+ * In accordance with the [network diagram](./README.md/###Network-diagram-(Physical-devices-and-Protocols)) of this assignment ```m3-1.saclay``` acts as Border router, namely allows to exchange (route) messages between the multihop wireless newtork and the world-wide network, while remaining nodes ```m3-1.saclay``` - ```m3-12.saclay``` are End point, namely produce data only and send it over the wireless sensor network. It is clear energy consumptions are pretty different according to the role of the node: 
+ * Border router routes, distributes/issues network parameters to End points, meanwhile produce data, therefore it requires the highest energy requirement
+ * End points, on the other hand, deal with sensing physical quantities sending over the network, therefore the lowest energy level is required 
 ### Disadvantages of employ multi-hop wireless network
 1. sdfds
 2. fgsfdg
