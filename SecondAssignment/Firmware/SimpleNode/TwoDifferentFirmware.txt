@@ -1,0 +1,3 @@
+In this assignment I prefer having two different separated firmware for simple node, namely one for FIT IoT-LAB M3 boards and one for NUCLEO F401RE board beacause:
+1. they implement two different physical pin configurations for sensors and actuators, in particular components from the first assignment make use of analog input interface and gpio, conversely boards of the second assignment make use of drivers to connect to the desired sensors
+2. different network parameters (different mqtts broker port and address), moreover different networks technology and topology (usb ethos vs. wireless sensor network)
