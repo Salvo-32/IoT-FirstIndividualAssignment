@@ -14,26 +14,27 @@ The following points address the new structure/diagram of the IoT system and its
 Deploying multiple [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/) boards, each one providing the **same** sensors (temperature and light) as the ones of the first individual assignment, sureley implies a bigger amount of data available. This aspect leads several advantages and disadvantages.
 ### Advantages of use multiple overlapping sensors
 1. Data quality
- * Temperature and light are [scalar physical quantities](https://en.wikipedia.org/wiki/Scalar_(physics)) (punctiform) therefore they change according to environmental position, namely with respect to the point in which the sensor performs measurement. 
- * In particular employing 22 different sensors (11  for temperature and 11 for light, belonging to different boards) spread all over the building surface on Saclay site, are better than using the ones from a single board.
- * This architecture allows to carry out the average temperature and brightness of the entire environment (not only physical quantity from a limited portion of the environment as in the previous assignment). 
- * It is possible to get more accurate values for both quantites that are very very close to the real values
+   1. Temperature and light are [scalar physical quantities](https://en.wikipedia.org/wiki/Scalar_(physics)) (punctiform) therefore they change according to environmental position, namely with respect to the point in which the sensor performs measurement. 
+   2. In particular employing 22 different sensors (11  for temperature and 11 for light, belonging to different boards) spread all over the building surface on Saclay site, are better than using the ones from a single board.
+   3. This architecture allows to carry out the average temperature and brightness of the entire environment (not only physical quantity from a limited portion of the environment as in the previous assignment). 
+   4. It is possible to get more accurate values for both quantites that are very very close to the real values
 2. Fault tolerance
- * Exploiting different boards, each one with its set of sensors, grants continuity and availability of temperature and light values even if a set of sensors/boards stops working or carries out abnormal data due to mulfunctioning. 
- * For example, right now (17/06/2021 16:00) on Saclay site ```m3-3.saclay``` board is **unavailable/suspected**, as you can see from the picture below: ![UnavailableBoard](Picture/M3-Saclay-Disposition2.png "UnavailableBoard") If the IoT system relies on that specific device then no data will be carried out, the web-dashboard will result always empty and the whole system will be useless. 
- * Moreover the possibility to perform aggregated computations for a specific physical property through data coming from different positions at the same time protect against wrong measurement values, namely if you can trust the majority of the sensor values then even if there are abnormal values, the outcome is still a reliable one.
+   1. Exploiting different boards, each one with its set of sensors, grants continuity and availability of temperature and light values even if a set of sensors/boards stops working or carries out abnormal data due to mulfunctioning. 
+   2. For example, right now (17/06/2021 16:00) on Saclay site ```m3-3.saclay``` board is **unavailable/suspected**, as you can see from the picture below: ![UnavailableBoard](Picture/M3-Saclay-Disposition2.png "UnavailableBoard") If the IoT system relies on that specific device then no data will be carried out, the web-dashboard will result always empty and the whole system will be useless. 
+   3. Moreover the possibility to perform aggregated computations for a specific physical property through data coming from different positions at the same time protect against wrong measurement values, namely if you can trust the majority of the sensor values then even if there are abnormal values, the outcome is still a reliable one.
 3. Energy efficiency
- * In accordance with the [network diagram](./README.md/###Network-diagram-(Physical-devices-and-Protocols)) of this assignment ```m3-1.saclay``` acts as Border router, namely allows to exchange (route) messages between the multihop wireless newtork and the world-wide network, while remaining nodes ```m3-1.saclay``` - ```m3-12.saclay``` are End point, namely produce data only and send it over the wireless sensor network. It is clear energy consumptions are pretty different according to the role of the node: 
- * Border router routes, distributes/issues network parameters to End points, meanwhile produce data, therefore it requires the highest energy requirement
- * End points, on the other hand, deal with sensing physical quantities sending over the network, therefore the lowest energy level is required 
-### Disadvantages of employ multi-hop wireless network
+   1. In accordance with the [network diagram](./README.md/###Network-diagram-(Physical-devices-and-Protocols)) of this assignment ```m3-1.saclay``` acts as Border router, namely allows to exchange (route) messages between the multihop wireless newtork and the world-wide network, while remaining nodes ```m3-1.saclay``` - ```m3-12.saclay``` are End point, namely produce data only and send it over the wireless sensor network. It is clear energy consumptions are pretty different according to the role of the node: 
+   2. Border router routes, distributes/issues network parameters to End points, meanwhile produce data, therefore it requires the highest energy requirement
+   3. End points, on the other hand, deal with sensing physical quantities sending over the network, therefore the lowest energy level is required 
+### Disadvantages of a multi-hop wireless network
 1. Throughput.
- * As stated in the introduction of this section, deploying multiple boards entails deal with a bigger amount of data wrt first individual assignment
- * Dealing with such an amount of information within a multi-hop wireless network, see [network diagram](./README.md/###Network-diagram-(Physical-devices-and-Protocols)), like the one in this system is less advantageous in term of number of exchanged packets per second. Since packets are forwarded from end point to border router through repeater nodes, then th number of packets per second is affected from each node performance. Poor intermediary node capabilities low the whole network throughput.  
+   1. As stated in the introduction of this section, deploying multiple boards entails deal with a bigger amount of data wrt first individual assignment
+   2. Dealing with such an amount of information within a multi-hop wireless network, see [network diagram](./README.md/###Network-diagram-(Physical-devices-and-Protocols)), like the one in this system is less advantageous in term of number of exchanged packets per second. Since packets are forwarded from end point to border router through repeater nodes, then th number of packets per second is affected from each node performance. Poor intermediary node capabilities low the whole network throughput.  
 2. End-to-End delay. The same as Throughput
 3. Security
- * Because of the need for intermediate nodes to forward packet toward its intended destination, every packet is vulnerable with respect to its intermediaries
- * Indeed these nodes could perform whatever function/computation in the packet, altering its content, replace it entireley, or deviate it from the intended destination. In order to avoid wrong behaviours as much as possible, different techniques (CRC, hash functions) should be undertaken
+   1. Because of the need for intermediate nodes to forward packet toward its intended destination, every packet is vulnerable with respect to its intermediaries
+   2. Indeed these nodes could perform whatever function/computation in the packet, altering its content, replace it entireley, or deviate it from the intended destination. 
+   3. In order to avoid wrong behaviours as much as possible, different techniques (CRC, hash functions) should be undertaken
 
 ## What are the connected components, the protocols to connect them and the overall IoT architecture
 ### Network diagram (Physical devices and Protocols)
