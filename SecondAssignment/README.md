@@ -45,7 +45,7 @@ The following diagram depicts all the physical devices employed in this project 
 
 From RIGHT to LEFT:
 1. All the available m3 boards on Saclay site, which act as follow:
-   1. ```m3-1.saclay``` acts as Border router, using the example firmware as it is described at [RIOT gnrc_border_router](https://github.com/RIOT-OS/RIOT/tree/master/examples/gnrc_border_router). It makes use of both 802.15.4 network technologies and 6LowPAN to interact with endopoints/simple nodes, moreover like in the first assignment it uses ```ethos``` + ```UHCP``` to reach the IP network by FIT IoT-LAB
+   1. ```m3-1.saclay``` acts as Border router namely it makes use of both 802.15.4 network technologies and 6LowPAN to interact with endopoints/simple nodes, moreover like in the first assignment it uses ```ethos``` + ```UHCP``` to reach the IP network by FIT IoT-LAB
    2. ```m3-2.saclay``` - ```m3-11.saclay```board as end-points or single nodes. 
       1. They sense temperature and light as in the previous assignment with same sampling rate, but using the integrated sensors ***LPS331AP*** and ***ISL29020*** Both the [IoT-LAB M3 webpage](https://www.iot-lab.info/docs/boards/iot-lab-m3/) and this [Official Jupyter Notebook](https://github.com/iot-lab/iot-lab-training/tree/master/riot/basics/sensors)) by FIT Iot-LAB provide detailed information about these two sensors and how to use them in [RIOT-OS](www.riot-os.org)
       2. Publish these values using MQTTS messages using 802.15.4 network interface within the 6LowPAN network.
@@ -61,14 +61,24 @@ In order to clearly understand how the physical devices and software components 
 ### Overall high-level architecture diagram of Software components
 This section shows inter-dependencies among the different software components. While the same paragraph of the first assingment provides a detailed description of each single software, here only new components are described 
 ![OverallArchitecture](./Picture/OverallArchitecture.jpg)
-1. Nucleo firmware updated for include device id alongside the MQTTS messages
-2. M3 boards which act as end-points run a new firmware version provided [here](). Several lines of code are comment ones which describe the behaviour of the whole firmware. 
+1. A new RIOT firmware ```Henhouse_4.elf``` provided [here main.c](./Firmware/SimpleNode/iotlab-m3/main.c) for [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/) boards which allow them to act as end-points. Several lines of code are comment ones which describe the behaviour of the whole firmware, please look at it before you go on. 
+   * Conversely, the local Nucleo F401RE board of the previous assignment still run the same firmware, sensing local environment and publishing MQTT messages just like before. As it is stated before, this board is still present in this assignment although this document does not take into account it.
+   * **NOTE** In this assignment I prefer having two different firmwares for FIT IoT-LAB M3 boards and one for NUCLEO F401RE board beacause:
+      * They implement two different physical pin configurations for sensors and actuators, in particular components from the first assignment make use of analog input interface and gpio, conversely boards of the second assignment make use of drivers to connect to the desired sensors
+      * They rely on different network parameters (different local mqtts broker port and address), moreover different networks technology and topology
+2. The example firmware ```RIOT gnrc_border_router``` as it is described at [Official RIOT-OS GitHub repository](https://github.com/RIOT-OS/RIOT/tree/master/examples/gnrc_border_router), runs on top of the above-mentioned ```m3-1.saclay``` Border router
+   * One change with respect to the official tutorial concerns how to build the offcial source code: ```make ETHOS_BAUDRATE=500000 BOARD=iotlab-m3 ```. That value of baudrate comes from the intrinsic UART baudrate of M3 with which the board reaches the IP Network by IoT-LAB.
 
-Although the current repository provide keys and certificates to access my Amazon AWS account at [Firmware/MqttBrokerBridge](Firmware/MqttBrokerBridge) folder, these are currently not allowed from my personal account. If you want to try the whole system function, please contact me to allow your access at Amazon AWS.
-
-In this assignment I prefer having two different separated firmware for simple node, namely one for FIT IoT-LAB M3 boards and one for NUCLEO F401RE board beacause:
-1. they implement two different physical pin configurations for sensors and actuators, in particular components from the first assignment make use of analog input interface and gpio, conversely boards of the second assignment make use of drivers to connect to the desired sensors
-2. different network parameters (different mqtts broker port and address), moreover different networks technology and topology (usb ethos vs. wireless sensor network)
+3. Yocto OS + Eclipse RSMB + Eclipse Mosquitto run on top of [IoT-LAB A8-M3](https://www.iot-lab.info/docs/boards/iot-lab-a8-m3/) board, like in the previous asignment
+   * **NOTE** Yocto OS replace Ubuntu 20.04 of the first assignment, but behaves just like before. The [Yocto Project](https://www.iot-lab.info/docs/os/yocto/) is an open-source project which allows the creation of embedded Linux distributions. The project was announced by the Linux Foundation in 2010 and launched in March, 2011, in collaboration with 22 organizations. 
+4. AWS Webservices
+   1.  AWS IoT Core adds a new Thing ```FITIoT-Lab``` ![IotCoreThings](./Picture/IotCoreThings.jpg). It grants access to AWS IoT Core webservices using a new dedicated set of keys and certificates.
+      * Although current repository provides keys and certificates to access my Amazon AWS account at [Firmware/MqttBrokerBridge](./Firmware/MqttBrokerBridge) folder, these are currently not allowed from my personal account. If you want to try the whole system functioning, please contact me at [Salvo.f96@gmail.com](mailto:Salvo.f96@gmail.com?subject=[GitHub] AWS Access request) to allow your access at Amazon AWS.
+  
+      *  still contain 
+   3.   + IoT Rules ()the same as before
+   4.  AWS DynamoDB the same as before
+   5.  AWS S3 host a new version of web-dashboard
 
 ## How do you measure the performance of the system
 Each of the following points measure the performance of the whole IoT system in term of Network performance and Energy efficiency as the number of wireless node increase and their physical locations vary. 
