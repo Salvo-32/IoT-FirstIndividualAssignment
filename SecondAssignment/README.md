@@ -90,25 +90,16 @@ This section shows inter-dependencies among the different software components. W
 
 ## How do you measure the performance of the system
 Each of the following points measure the performance of the whole IoT system in term of Network performance and Energy efficiency as the number of wireless node increase and their physical locations vary. 
-### 5 wireless nodes as in series network topology 
+### 5 wireless nodes 
+#### Network performance (end-to-end latency/throughput, quality of wireless communication channel)
+
+#### Energy consumption (duty cycling)
+
+### 10 wireless nodes
 #### Network performance
 
 #### Energy consumption
 
-### 5 wireless nodes as mesh network topology 
-#### Network performance
-
-#### Energy consumption
-
-### 10 wireless nodes as in-series network topology 
-#### Network performance
-
-#### Energy consumption
-
-### 10 wireless nodes as mesh network topology
-#### Network performance
-
-#### Energy consumption
 
 ### Conclusion
 
