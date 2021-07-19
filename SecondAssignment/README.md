@@ -72,12 +72,13 @@ This section shows inter-dependencies among the different software components. W
 3. Yocto OS + Eclipse RSMB + Eclipse Mosquitto run on top of [IoT-LAB A8-M3](https://www.iot-lab.info/docs/boards/iot-lab-a8-m3/) board, like in the previous asignment
    * **NOTE** Yocto OS replace Ubuntu 20.04 of the first assignment, but behaves just like before. The [Yocto Project](https://www.iot-lab.info/docs/os/yocto/) is an open-source project which allows the creation of embedded Linux distributions. The project was announced by the Linux Foundation in 2010 and launched in March, 2011, in collaboration with 22 organizations. 
 4. AWS Webservices
-   1.  AWS IoT Core adds a new Thing ```FITIoT-Lab``` ![IotCoreThings](./Picture/IotCoreThings.png). It grants access to AWS IoT Core webservices using a new dedicated set of keys and certificates.
-      * Although current repository provides keys and certificates to access my Amazon AWS account at [Firmware/MqttBrokerBridge](./Firmware/MqttBrokerBridge) folder, these are currently not allowed from my personal account. If you want to try the whole system functioning, please contact me at ***Salvo.f96@gmail.com***
+   1. AWS IoT Core adds a new Thing ```FITIoT-Lab```, which grants access to AWS IoT Core webservices using a new dedicated set of keys and certificates. 
       * To allow the local nucleo board and m3 boards access AWS IoT core at the same time, two different set of keys and certificates are rquired (One for each Thing)
-      * IoT Rules (Temperature and Light rule) are the same as before
-   4.  AWS DynamoDB the same as before
-   5.  AWS S3 hosts a new version of web-dashboard ```index2.html```, more additional details about the webdashboard source code are provided below ![S3Bucket](./Picture/S3Bucket.png)
+      * Although current repository provides keys and certificates to access my Amazon AWS account at [Firmware/MqttBrokerBridge](./Firmware/MqttBrokerBridge) folder, these are currently not allowed from my personal account. If you want to try the whole system functioning, please contact me at ***Salvo.f96@gmail.com***
+      
+      * IoT Rules (Temperature and Light rule) are the same as before ![IotCoreThings](./Picture/IotCoreThings.png)
+   4. AWS DynamoDB the same as before
+   5. AWS S3 hosts a new version of web-dashboard ```index2.html```, more additional details about its source code are provided below ![S3Bucket](./Picture/S3Bucket.png)
 5.  Web-dashboard is a newer version which works with HTML5 and JS
    * It relies on [AWS JS SDK](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/) only (more efficient than previous version with Lambda)! 
    * Using this SDK the dashboard make use of Amazon Cognito (as in the previous assignment) in order to access/authenticate AWS Webservices 
@@ -85,7 +86,7 @@ This section shows inter-dependencies among the different software components. W
    * Using this SDK the dashboard to send MQTT message to Amazon AWS broker to interact with specifid actuaturs and devices
    * All the aggreagted computation (avg, min, max) are performed on the client side using JS functions
    * Further information about the source code are available at [index2.html](./Frontend/index2.html) 
-   * The following screenshot shows the current version of the Dashboard ![index2](./Frontend/index2.png)  
+   * The following screenshot shows the current version of the Dashboard ![index2](./Picture/index2.png)  
 
 ## How do you measure the performance of the system
 Each of the following points measure the performance of the whole IoT system in term of Network performance and Energy efficiency as the number of wireless node increase and their physical locations vary. 
