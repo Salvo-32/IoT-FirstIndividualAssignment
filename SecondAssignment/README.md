@@ -30,9 +30,8 @@ Deploying multiple [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/
 ### Disadvantages of a multi-hop wireless network
 1. Throughput.
    1. As stated in the introduction of this section, deploying multiple boards entails deal with a bigger amount of data wrt first individual assignment
-   2. Dealing with such an amount of information within a multi-hop wireless network, see [network diagram](./README.md/###Network-diagram-(Physical-devices-and-Protocols)), like the one in this system is less advantageous in term of number of exchanged packets per second. Since packets are forwarded from end point to border router through repeater nodes, then th number of packets per second is affected from each node performance. Poor intermediary node capabilities low the whole network throughput.  
-2. End-to-End delay. The same as Throughput
-3. Security
+   2. Dealing with such an amount of information within a multi-hop wireless network, see [network diagram](./README.md/###Network-diagram-(Physical-devices-and-Protocols)), like the one in this system is less advantageous in term of number of exchanged packets per second. Since packets are forwarded from end point to border router through repeater nodes, then th number of packets per second is affected from each node performance. Poor intermediary node capabilities could low the whole network throughput, as weel as, the End-to-End delay
+2. Security
    1. Because of the need for intermediate nodes to forward packet toward its intended destination, every packet is vulnerable with respect to its intermediaries
    2. Indeed these nodes could perform whatever function/computation in the packet, altering its content, replace it entireley, or deviate it from the intended destination. 
    3. In order to avoid wrong behaviours as much as possible, different techniques (CRC, hash functions) should be undertaken
@@ -42,25 +41,25 @@ Deploying multiple [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/
 The following diagram depicts all the physical devices employed in this project and relative network protocols used to interconnect each other
 ![PhysicalNetworkDiagram](./Picture/PhysicalNetworkDiagram.jpg)
 
-**NOTE** First individual assignment's network components are neither depicted again in the diagram above nor these are not taken into account in the description below. (Look at the appropriate [document](/FirstAssignment/README.md/####-Network-diagram-(Physical-devices-and-Protocols)))
+**NOTE** First individual assignment's network components are neither depicted again in the diagram above nor these are taken into account in the description below. (Look at the appropriate [document](/FirstAssignment/README.md/####-Network-diagram-(Physical-devices-and-Protocols)))
 
 From RIGHT to LEFT:
 1. All the available m3 boards on Saclay site, which act as follow:
    1. ```m3-1.saclay``` acts as Border router, using the example firmware as it is described at [RIOT gnrc_border_router](https://github.com/RIOT-OS/RIOT/tree/master/examples/gnrc_border_router). It makes use of both 802.15.4 network technologies and 6LowPAN to interact with endopoints/simple nodes, moreover like in the first assignment it uses ```ethos``` + ```UHCP``` to reach the IP network by FIT IoT-LAB
    2. ```m3-2.saclay``` - ```m3-11.saclay```board as end-points or single nodes. 
-      1. They sense temperature and light as in the previous assignment with same sampling rate, but using the integrated sensors ***LPS331AP*** and ***ISL29020***
+      1. They sense temperature and light as in the previous assignment with same sampling rate, but using the integrated sensors ***LPS331AP*** and ***ISL29020*** Both the [IoT-LAB M3 webpage](https://www.iot-lab.info/docs/boards/iot-lab-m3/) and this [Official Jupyter Notebook](https://github.com/iot-lab/iot-lab-training/tree/master/riot/basics/sensors)) by FIT Iot-LAB provide detailed information about these two sensors and how to use them in [RIOT-OS](www.riot-os.org)
       2. Publish these values using MQTTS messages using 802.15.4 network interface within the 6LowPAN network.
-      3. Hop-by-hop (node-by-node) MQTTS messages eventually reach the firs final destination: the Boarder router
-2. IoT-LAB A8-M3, which behaves as the Ubuntu Laptop from the first assignment
-   1. It is an MQTTS broker (RSMB) that receives insecure messages from the wireless mesh network, in turn bridged (transparent bridge) to the Eclipse Mosquitto MQTT Broker
+      3. Hop-by-hop (node-by-node) MQTTS messages eventually reach first final destination: the Border router
+2. [IoT-LAB A8-M3](https://www.iot-lab.info/docs/boards/iot-lab-a8-m3/), which behaves as the Ubuntu Laptop from the first assignment
+   1. It is an MQTTS broker (RSMB) that receives insecure messages from the wireless mesh network endpoints, in turn bridged (transparent bridge) to the Eclipse Mosquitto MQTT Broker
    2. It is an MQTT broker (Ecliplse Mosquitto) that receive insecure messages from RSMB and forward them using TLS toward Amazon MQTT broker
-3. AWS IoT Core, same as previous assignment
-4. Frontend devices and WebDashboard that exchange message using HTTPS, same as previous assignment
+3. Amazon AWS MQTT broker, same as previous assignment, which exchange MQTT(TLS) messages with the above-mentioned [IoT-LAB A8-M3](https://www.iot-lab.info/docs/boards/iot-lab-a8-m3/)
+4. Frontend devices and WebDashboard that exchange requests and responses using HTTPS, same as previous assignment
  
 In order to clearly understand how the physical devices and software components work together look at paragraph Overall high-level architecture diagram of the whole system
 
 ### Overall high-level architecture diagram of Software components
-This section shows interdependencies among the different software components. While the same paragraph of the first assingment provides a detailed description of each single software, here only new components are described 
+This section shows inter-dependencies among the different software components. While the same paragraph of the first assingment provides a detailed description of each single software, here only new components are described 
 ![OverallArchitecture](./Picture/OverallArchitecture.jpg)
 1. Nucleo firmware updated for include device id alongside the MQTTS messages
 2. M3 boards which act as end-points run a new firmware version provided [here](). Several lines of code are comment ones which describe the behaviour of the whole firmware. 
