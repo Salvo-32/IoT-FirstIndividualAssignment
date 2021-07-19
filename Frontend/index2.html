@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Henhouse - salvo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <h1>Henhouse - Salvo</h1>
+        <form> <!-- Latest values from a specific device -->
+            <fieldset>
+                <legend>Single device</legend>
+                <fieldset>
+                    <legend>Select a device: </legend>
+                    <input type="radio" id="m3-2.saclay" name="device" value="m3-2.saclay" onclick="sendDesiredDevice(id)">
+                    <label for="m3-2.saclay">m3-2.saclay</label><br>
+
+                    <input type="radio" id="m3-3.saclay" name="device" value="m3-3.saclay" onclick="sendDesiredDevice(id)" disabled>
+                    <label for="m3-3.saclay">m3-3.saclay</label><br>
+
+                    <input type="radio" id="m3-4.saclay" name="device" value="m3-4.saclay" onclick="sendDesiredDevice(id)">
+                    <label for="m3-4.saclay">m3-4.saclay</label><br>
+
+                    <input type="radio" id="m3-5.saclay" name="device" value="m3-5.saclay" onclick="sendDesiredDevice(id)">
+                    <label for="m3-5.saclay">m3-5.saclay</label><br>
+
+                    <input type="radio" id="m3-6.saclay" name="device" value="m3-6.saclay" onclick="sendDesiredDevice(id)">
+                    <label for="m3-6.saclay">m3-6.saclay</label><br>
+
+                    <input type="radio" id="m3-7.saclay" name="device" value="m3-7.saclay" onclick="sendDesiredDevice(id)">
+                    <label for="m3-7.saclay">m3-7.saclay</label><br>
+
+                    <input type="radio" id="m3-8.saclay" name="device" value="m3-8.saclay" onclick="sendDesiredDevice(id)">
+                    <label for="m3-8.saclay">m3-8.saclay</label><br>
+
+                    <input type="radio" id="m3-9.saclay" name="device" value="m3-9.saclay" onclick="sendDesiredDevice(id)">
+                    <label for="m3-9.saclay">m3-9.saclay</label><br>
+
+                    <input type="radio" id="m3-10.saclay" name="device" value="m3-10.saclay" onclick="sendDesiredDevice(id)">
+                    <label for="m3-10.saclay">m3-10.saclay</label><br>
+
+                    <input type="radio" id="m3-11.saclay" name="device" value="m3-11.saclay" onclick="sendDesiredDevice(id)">
+                    <label for="m3-11.saclay">m3-11.saclay</label><br>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Latest values from the selected device: </legend>
+                    <output id="latestDeviceTemperature"></output> <br>
+                    <output id="latestDeviceLight"></output>
+                </fieldset>
+
+                <fieldset>
+                    <legend id="aggregatedValuesLegend">Aggregated values from the selected device, since last hour  </legend>
+                    <output id="avgDeviceTemperature"></output> <br>
+                    <output id="avgDeviceLight"></output> <br>
+                    <output id="minDeviceTemperature"></output> <br>
+                    <output id="minDeviceLight"></output> <br>
+                    <output id="maxDeviceTemperature"></output> <br>
+                    <output id="maxDeviceLight"></output> <br>
+                </fieldset>
+
+                <fieldset>
+                    <legend id="allValuesLegend"> All values from the selected device, since last hour  </legend>
+                    <output id="allDeviceTemperature"></output> <br>
+                    <output id="allDeviceLight"></output> <br>
+                </fieldset>
+
+                <fieldset>
+                    <legend id="actuatorLegend">Control ACTUATORS of the specified device: </legend>
+                    <h3>Buzzer - (IoT-LAB M3 Led 0)</h3>
+                    <button id="buzzerOnButton" type="button" name="actuator/buzzer" value="RemoteON" onclick="remoteCommand(name, value)">Turn ON</button>
+                    <button id="buzzerOffButton" type="button" name="actuator/buzzer" value="RemoteOFF" onclick="remoteCommand(name, value)">Turn OFF</button>
+
+                    <h3>Fan - (IoT-LAB M3 Led 1)</h3>
+                    <button id="fanOnButton" type="button" name="actuator/fan" value="RemoteON" onclick="remoteCommand(name, value)">Turn ON</button>
+                    <button id="fanOffButton" type="button" name="actuator/fan" value="RemoteOFF" onclick="remoteCommand(name, value)">Turn OFF</button>
+
+                    <h3>Lamp - (IoT-LAB M3 Led 2)</h3>
+                    <button id="lampOnButton" type="button" name="actuator/lamp" value="RemoteON" onclick="remoteCommand(name, value)">Turn ON</button>
+                    <button id="lampOffButton" type="button" name="actuator/lamp" value="RemoteOFF" onclick="remoteCommand(name, value)">Turn OFF</button>
+                </fieldset>
+            </fieldset>
+        </form>  
+        <br>
+        <form>
+            <fieldset>
+                <legend>Sensor from ALL environmental stations</legend>
+                <fieldset>
+                    <legend>Select a sensor: </legend>
+                    <input type="radio" id="sensor/temperature" name="sensor" value="temperatureSensor" onclick="sendDesiredSensor(id)">
+                    <label for="temperatureSensor">Temperature sensor</label><br>
+
+                    <input type="radio" id="sensor/light" name="sensor" value="lightSensor" onclick="sendDesiredSensor(id)">
+                    <label for="lightSensor">Light sensor</label><br>
+                </fieldset>
+
+                <fieldset>
+                    <legend id="environmentalStationLegend">All values from the selected sensor, since last hour</legend>
+                    <output id ="environmentalStationLabel"></output> <br>
+                    <output id ="deviceList"></output> <br>
+                    <output id="environmentalStationValues"></output>                    
+                </fieldset>
+
+                <fieldset>
+                    <legend> Aggregated values for EACH sensor from ALL environmental stations </legend>
+                    <button type="button" id="btn1" onclick="getMultipleDeviceValues()">Get all!</button>
+                    <output id="multipleDeviceLabel"> </output> <br>
+                    <output id="avgMultipleDeviceTemperature"></output> <br>
+                    <output id="avgMultipleDeviceLight"></output> <br>
+                    <output id="minMultipleDeviceTemperature"></output> <br>
+                    <output id="minMultipleDeviceLight"></output> <br>
+                    <output id="maxMultipleDeviceTemperature"></output> <br>
+                    <output id="maxMultipleDeviceLight"></output>
+                </fieldset>
+            </fieldset>
+        </form>
+
+
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.899.0.min.js"></script>
+        <script type="text/javascript">
+                        // Initialize the Amazon Cognito credentials provider
+                        AWS.config.region = 'us-east-1'; // Region
+                        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                            IdentityPoolId: 'us-east-1:229ea7b7-435c-45a4-973a-8ef8cbfb3913',
+                        });
+                        var currentMsTimestamp = Date.now();
+                        //var currentMsTimestamp = 1626258005513; // Wed Jul 14 2021 12:20:05
+                        //console.log("Current timestamp in ms: " + currentMsTimestamp);
+                        var lastHourMsTimestamp = currentMsTimestamp - 3.6e6; // 1 hour = 3, 600, 000 ms = 3.6 * 10 ^ 6;
+                        //console.log("Last hour timestamp in ms: " + lastHourMsTimestamp);
+                        //alert("Selected device is: " + id);
+
+                        function sendDesiredDevice(id) {
+                            var dynamodb = new AWS.DynamoDB({
+                                apiVersion: '2012-08-10',
+                                //endpoint: 'a2ltfi1iwu8oyf-ats.iot.us-east-1.amazonaws.com',
+                            });
+                            //Latest value for sensor
+                            var params = {
+                                TableName: 'HenhouseDbTable',
+                                Select: 'ALL_ATTRIBUTES',
+                                FilterExpression: 'message.device = :device AND id >= :min AND id <= :max',
+                                ExpressionAttributeValues: {
+                                    ':device': {S: id},
+                                    ':min': {N: lastHourMsTimestamp.toString()},
+                                    ':max': {N: currentMsTimestamp.toString()}
+                                }
+                            };
+                            var lastTemperatureId = 0;
+                            var lastTemperature = 0;
+                            var lastLightId = 0;
+                            var lastLight = 0;
+                            var data = new Object();
+                            var err = new Error();
+                            var result = dynamodb.scan(
+                                    params,
+                                    function (err, data) {
+                                        if (err) {
+                                            console.log(err, err.stack); // an error occurred
+                                        } else {
+                                            console.log(data); // successful response
+
+                                            var temperatureValues = new Array();
+                                            var lightValues = new Array();
+                                            for (var i = 0; i < data.Count; i++) {
+                                                switch (data.Items[i].topic.S) {
+                                                    case "sensor/temperature":
+                                                        temperatureValues.push(parseInt(data.Items[i].message.M.value.S));
+                                                        if (data.Items[i].id.N > lastTemperatureId) {
+                                                            lastTemperatureId = data.Items[i].id.N;
+                                                            lastTemperature = data.Items[i].message.M.value.S;
+                                                        }
+                                                        break;
+                                                    case "sensor/light":
+                                                        lightValues.push(parseInt(data.Items[i].message.M.value.S));
+                                                        if (data.Items[i].id.N > lastLightId) {
+                                                            lastLightId = data.Items[i].id.N;
+                                                            lastLight = data.Items[i].message.M.value.S;
+                                                        }
+                                                        break;
+                                                    default:
+                                                        alert(data.Items[i].topic.S + "Topic not match");
+                                                        break;
+                                                }
+                                            }
+
+                                            document.getElementById('latestDeviceTemperature').value = "Last temperature retrieved at " + new Date(parseInt(lastTemperatureId)).toLocaleString() + ": " + lastTemperature + " °C";
+                                            document.getElementById('latestDeviceLight').value = "Last light retrieved at " + new Date(parseInt(lastLightId)).toLocaleString() + ": " + lastLight + " LUX";
+                                            var avgTemperature = 0;
+                                            for (var i = 0; i < temperatureValues.length; i++) {
+                                                avgTemperature += temperatureValues[i];
+                                            }
+                                            var avgTemperature = avgTemperature / temperatureValues.length;
+                                            var avgLight = 0;
+                                            for (var i = 0; i < lightValues.length; i++) {
+                                                avgLight += lightValues[i];
+                                            }
+                                            var avgLight = avgLight / lightValues.length;
+                                            document.getElementById('aggregatedValuesLegend').value += new Date(parseInt(lastHourMsTimestamp)).toLocaleTimeString() + " - " + new Date(parseInt(currentMsTimestamp)).toLocaleTimeString();
+                                            document.getElementById('avgDeviceTemperature').value = "Average temperature: " + avgTemperature + " °C";
+                                            document.getElementById('avgDeviceLight').value = "Average light: " + avgLight + " LUX";
+                                            //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max#examples
+                                            var minTemperature = temperatureValues.reduce(function (a, b) {
+                                                return Math.min(a, b);
+                                            });
+                                            var minLight = lightValues.reduce(function (a, b) {
+                                                return Math.min(a, b);
+                                            });
+                                            var maxTemperature = temperatureValues.reduce(function (a, b) {
+                                                return Math.max(a, b);
+                                            });
+                                            var maxLight = lightValues.reduce(function (a, b) {
+                                                return Math.max(a, b);
+                                            });
+                                            document.getElementById('minDeviceTemperature').value = "Min temperature: " + minTemperature + " °C";
+                                            document.getElementById('minDeviceLight').value = "Min light: " + minLight + " LUX";
+                                            document.getElementById('maxDeviceTemperature').value = "Max temperature: " + maxTemperature + " °C";
+                                            document.getElementById('maxDeviceLight').value = "Max light: " + maxLight + " LUX";
+                                            document.getElementById('allValuesLegend').value += new Date(parseInt(lastHourMsTimestamp)).toLocaleTimeString() + " - " + new Date(parseInt(currentMsTimestamp)).toLocaleTimeString();
+                                            document.getElementById('allDeviceTemperature').value = "Temperature values: " + temperatureValues.toString() + " °C";
+                                            document.getElementById('allDeviceLight').value = "Light values: " + lightValues.toString() + " LUX";
+                                        }
+                                    }
+                            );
+                        }
+
+                        function sendDesiredSensor(sensor) {
+                            var dynamodb = new AWS.DynamoDB({
+                                apiVersion: '2012-08-10',
+                                //endpoint: 'a2ltfi1iwu8oyf-ats.iot.us-east-1.amazonaws.com',
+                            });
+                            //Latest value for sensor
+                            var params = {
+                                TableName: 'HenhouseDbTable',
+                                Select: 'ALL_ATTRIBUTES',
+                                FilterExpression: 'topic = :topic AND id >= :min AND id <= :max',
+                                ExpressionAttributeValues: {
+                                    ':topic': {S: sensor},
+                                    ':min': {N: lastHourMsTimestamp.toString()},
+                                    ':max': {N: currentMsTimestamp.toString()}
+                                }
+                            };
+                            var data = new Object();
+                            var err = new Error();
+                            var result = dynamodb.scan(
+                                    params,
+                                    function (err, data) {
+                                        if (err) {
+                                            console.log(err, err.stack); // an error occurred
+                                        } else {
+                                            console.log(data); // successful response
+
+                                            var values = new Array();
+                                            var devices = new Array();
+                                            for (var i = 0; i < data.Count; i++) {
+                                                values.push(data.Items[i].message.M.value.S);
+                                                if (devices.includes(data.Items[i].message.M.device.S) == false) {
+                                                    devices.push(data.Items[i].message.M.device.S);
+                                                }
+                                            }
+                                            document.getElementById('environmentalStationLabel').value = "Temporal interval: " + new Date(parseInt(lastHourMsTimestamp)).toLocaleTimeString() + " - " + new Date(parseInt(currentMsTimestamp)).toLocaleTimeString();
+                                            document.getElementById('deviceList').value = 'The following values are retrieved from: ' + devices.toString();
+                                            document.getElementById('environmentalStationValues').value = "Values: " + values.toString();
+                                        }
+                                    }
+                            );
+                        }
+
+                        function getMultipleDeviceValues() {
+                            var dynamodb = new AWS.DynamoDB({
+                                apiVersion: '2012-08-10',
+                            });
+                            var params = {
+                                TableName: 'HenhouseDbTable',
+                                Select: 'ALL_ATTRIBUTES',
+                                FilterExpression: 'id >= :min AND id <= :max',
+                                ExpressionAttributeValues: {
+                                    ':min': {N: lastHourMsTimestamp.toString()},
+                                    ':max': {N: currentMsTimestamp.toString()}
+                                }
+                            };
+                            var data = new Object();
+                            var err = new Error();
+                            var result = dynamodb.scan(
+                                    params,
+                                    function (err, data) {
+                                        if (err) {
+                                            console.log(err, err.stack); // an error occurred
+                                        } else {
+                                            console.log(data); // successful response
+
+                                            var temperatureValues = new Array();
+                                            var lightValues = new Array();
+                                            for (var i = 0; i < data.Count; i++) {
+                                                switch (data.Items[i].topic.S) {
+                                                    case "sensor/temperature":
+                                                        temperatureValues.push(parseInt(data.Items[i].message.M.value.S));
+                                                        break;
+                                                    case "sensor/light":
+                                                        lightValues.push(parseInt(data.Items[i].message.M.value.S));
+                                                        break;
+                                                    default:
+                                                        alert(data.Items[i].topic.S + "Topic not match");
+                                                        break;
+                                                }
+                                            }
+
+                                            var avgMultipleDeviceTemperature = 0;
+                                            for (var i = 0; i < temperatureValues.length; i++) {
+                                                avgMultipleDeviceTemperature += temperatureValues[i];
+                                            }
+                                            var avgMultipleDeviceTemperature = avgMultipleDeviceTemperature / temperatureValues.length;
+                                            var avgMultipleDeviceLight = 0;
+                                            for (var i = 0; i < lightValues.length; i++) {
+                                                avgMultipleDeviceLight += lightValues[i];
+                                            }
+                                            var avgMultipleDeviceLight = avgMultipleDeviceLight / lightValues.length;
+                                            //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max#examples
+                                            var minMultipleDeviceTemperature = temperatureValues.reduce(function (a, b) {
+                                                return Math.min(a, b);
+                                            });
+                                            var minMultipleDeviceLight = lightValues.reduce(function (a, b) {
+                                                return Math.min(a, b);
+                                            });
+                                            var maxMultipleDeviceTemperature = temperatureValues.reduce(function (a, b) {
+                                                return Math.max(a, b);
+                                            });
+                                            var maxMultipleDeviceLight = lightValues.reduce(function (a, b) {
+                                                return Math.max(a, b);
+                                            });
+                                            document.getElementById('multipleDeviceLabel').value = "Temporal interval: " + new Date(parseInt(lastHourMsTimestamp)).toLocaleTimeString() + " - " + new Date(parseInt(currentMsTimestamp)).toLocaleTimeString();
+                                            //document.getElementById('deviceList').value = 'The following values are retrieved from: ' + devices.toString();
+                                            document.getElementById("avgMultipleDeviceTemperature").value = "Average temperature value: " + avgMultipleDeviceTemperature;
+                                            document.getElementById("avgMultipleDeviceLight").value = "Average light value: " + avgMultipleDeviceLight;
+                                            document.getElementById("minMultipleDeviceTemperature").value = "Min temperature value: " + minMultipleDeviceTemperature;
+                                            document.getElementById("minMultipleDeviceLight").value = "Min light value: " + minMultipleDeviceLight;
+                                            document.getElementById("maxMultipleDeviceTemperature").value = "Max temperature value: " + maxMultipleDeviceTemperature;
+                                            document.getElementById("maxMultipleDeviceLight").value = "Max temperature value: " + maxMultipleDeviceLight;
+                                        }
+                                    }
+                            );
+                        }
+
+                        function remoteCommand(name, value) {
+                            var iotdata = new AWS.IotData(
+                                    {
+                                        endpoint: 'a2ltfi1iwu8oyf-ats.iot.us-east-1.amazonaws.com',
+                                        apiVersion: '2015-05-28'
+                                    }
+                            );
+                            var selectedDevice = document.querySelector('input[name="device"]:checked').value;
+                            var params = {
+                                topic: name, //required topic
+                                payload: '{"device":"' + selectedDevice + '", "value":"' + value + '"}',
+                                qos: '0'
+                            };
+                            var tmp = 0;
+
+                            iotdata.publish(
+                                    params,
+                                    function (err, data) {
+                                        if (err) {
+                                            console.log(err, err.stack); // an error occurred
+                                            alert("Error! Command not executed");
+                                        } else {
+                                            console.log(data); // successful response
+                                            alert("OK! Remote command sent to: " + selectedDevice);
+                                        }
+                                    }
+                            );
+
+                        }
+        </script>
+    </body>
+</html> 
