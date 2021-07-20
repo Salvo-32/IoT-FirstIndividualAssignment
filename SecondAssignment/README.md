@@ -89,13 +89,58 @@ This section shows inter-dependencies among the different software components. W
    * The following screenshot shows the current version of the Dashboard ![index2](./Picture/index2.png)  
 
 ## How do you measure the performance of the system
-Each of the following points measure the performance of the whole IoT system in term of Network performance and Energy efficiency as the number of wireless node increase and their physical locations vary. 
-### 5 wireless nodes 
+Each of the following points measure the performance of the whole IoT system in term of Energy efficiency (Power/Current/Voltage monitoring) and Wireless channel analysis, as the number of wireless node increase and consequently their physical locations vary. 
+1. Power monitoring follows the official [Consumption monitoring guidelines](https://www.iot-lab.info/docs/tools/consumption-monitoring/) by FIT IoT-LAB, , please look at it to set up monitoring activity ![A8PowerMonitoring1](./Evaluation/Picture/A8PowerMonitoring1.png)
+3. Wireless channel analysis follows the official [Radio monitoring guidelines](https://www.iot-lab.info/docs/tools/radio-monitoring/) by FIT IoT-LAB, please look at it to set up monitoring activity ![M3Monitoring1](./Evaluation/Picture/M3Monitoring1.png)
+4. Here there is the list used to set up profiles above  (they take place at fava@saclay):
+   1. ```iotlab-profile adda8 -n A8PowerMonitoring1 --power dc -voltage -current -power -period 8244 -avg 4```
+   2. ```iotlab-profile addm3 -n M3Monitoring1 --power dc -voltage -current -power -period 8244 -avg 4 -rssi -channels 22 26 -num 1 -rperiod 1000```
+5. Power monitoring concerns both A8 node and M3 nodes, while Wireless channel analysis concerns M3 boards only since they are the only one using 802.15.4 wireless technology
+6. For each experiment, wireless channel employed is the **26** one for every m3 board (Multi-hop wireless network)
+7. **NOTE** Next sections carry out graphical outcomes about the monitoring activities, for each node. Textual results are available at [Evaluation folder](./Evaluation) of this repository
+
+### Experiment 272564 - 5 wireless nodes 
+The IoT-LAB experiment 272564 takes place in Saclay site, involving:
+* **5** endpoint nodes ```m3-2.saclay```, ```m3-4.saclay``` **-** ```m3-7.saclay``` 
+* 1 border router ```m3-1.saclay```
+* 1 MQTT bridge ```a8-2.saclay```
+
+To show the following result the following shell command are used:
+1. ```iotlab-experiment submit -n Henhouse -d 120 -l saclay,a8,2 -l saclay,m3,1+2+4-7```
+2. ```iotlab-node --profile A8PowerMonitoring1 -l saclay,a8,2```
+3. ```iotlab-node --profile M3Monitoring1 -l saclay,m3,1+2+4-7```
+4. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/a8_2.oml --power --label "A8-2 - Power consumption analysis - Exp ID 272563"```
+5. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272563"```
+6. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272563" --all```
+7. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Endpoint (m3-2) - Power consumption analysis - Exp ID 272563"```
+8. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Endpoint (m3-2) - Wireless channel analysis - Exp ID 272563" --all```
+9. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272563"```
+10. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272563" --all```
+11. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272563"```
+12. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272563" --all```
+13. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272563"```
+14. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272563" --all```
+15. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272563"```
+16. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272563" --all```
+ 
+
 #### Network performance (end-to-end latency/throughput, quality of wireless communication channel)
 
 #### Energy consumption (duty cycling)
 
 ### 10 wireless nodes
+The IoT-LAB experiment 272564 takes place in Saclay site, involving:
+* **10** endpoint nodes ```m3-2.saclay```, ```m3-4.saclay``` **-** ```m3-12.saclay``` 
+* 1 border router ```m3-1.saclay```
+* 1 MQTT bridge ```a8-2.saclay```
+
+To show the following result the following shell command are used:
+1. ```iotlab-experiment submit -n Henhouse -d 120 -l saclay,a8,2 -l saclay,m3,1+2+4-12```
+2. ```iotlab-node --profile A8PowerMonitoring1 -l saclay,a8,2```
+3. ```iotlab-node --profile M3Monitoring1 -l saclay,m3,1+2+4-12```
+4. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272564"```
+5. ```plot_oml_radio --input ~/.iot-lab/272564/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272564" --all```
+
 #### Network performance
 
 #### Energy consumption
