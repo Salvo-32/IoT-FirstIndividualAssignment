@@ -1,0 +1,35 @@
+2021-07-20 08:44:28,028 :: INFO :: Start experiment: fava-272564
+2021-07-20 08:44:28,041 :: INFO :: Control node : Starting of control node serial interface
+2021-07-20 08:44:28,053 :: INFO :: Control node : reset
+2021-07-20 08:44:28,064 :: INFO :: Reset Control Node
+2021-07-20 08:44:31,053 :: INFO :: Control node : start power of open node
+2021-07-20 08:44:31,083 :: INFO :: Node OpenOCD: Setup of openocd node
+2021-07-20 08:44:34,112 :: INFO :: Node OpenOCD: flash of openocd node
+2021-07-20 08:44:34,131 :: INFO :: Flash firmware on OpenOCD: /usr/lib/python2.7/site-packages/gateway_code/static/m3_idle.elf
+2021-07-20 08:44:36,664 :: INFO :: Control node : Start experiment
+2021-07-20 08:44:36,724 :: INFO :: Control Node set time delay: 1679 us
+2021-07-20 08:44:36,753 :: INFO :: Control node : profile configuration
+2021-07-20 08:44:36,760 :: INFO :: Configure profile on Control Node
+2021-07-20 08:44:36,836 :: INFO :: Start experiment succeeded
+2021-07-20 08:44:42,680 :: INFO :: Update experiment profile
+2021-07-20 08:44:42,724 :: INFO :: Control node : profile configuration
+2021-07-20 08:44:42,738 :: INFO :: Configure profile on Control Node
+2021-07-20 08:45:58,446 :: INFO :: Gateway Manager : Flash of node
+2021-07-20 08:45:58,451 :: INFO :: Flash firmware on open node: /tmp/tmpYktM77--firmware3543611695426376881-gnrc_border_router.elf
+2021-07-20 08:45:58,496 :: INFO :: Node OpenOCD: flash of openocd node
+2021-07-20 08:45:58,499 :: INFO :: Flash firmware on OpenOCD: /tmp/tmpYktM77--firmware3543611695426376881-gnrc_border_router.elf
+2021-07-20 08:56:29,328 :: INFO :: Gateway Manager : Stop experiment
+2021-07-20 08:56:29,338 :: INFO :: Stop experiment
+2021-07-20 08:56:29,347 :: INFO :: Control node : stop of the experiment
+2021-07-20 08:56:29,355 :: INFO :: Control node : profile configuration
+2021-07-20 08:56:29,365 :: INFO :: Configure profile on Control Node
+2021-07-20 08:56:29,443 :: INFO :: Control node : start power of open node
+2021-07-20 08:56:29,487 :: INFO :: Node OpenOCD: teardown of openocd node
+2021-07-20 08:56:32,523 :: INFO :: openocd node debugger stop
+2021-07-20 08:56:33,215 :: INFO :: Node OpenOCD: flash of openocd node
+2021-07-20 08:56:33,230 :: INFO :: Flash firmware on OpenOCD: /usr/lib/python2.7/site-packages/gateway_code/static/m3_idle.elf
+2021-07-20 08:56:35,695 :: INFO :: Control node : Stop control node serial interface
+2021-07-20 08:56:35,704 :: INFO :: Control node : stop power of open node
+2021-07-20 08:56:35,793 :: INFO :: Control node : reset
+2021-07-20 08:56:35,800 :: INFO :: Reset Control Node
+2021-07-20 08:56:38,570 :: INFO :: Stop experiment succeeded

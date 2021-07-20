@@ -1,0 +1,27 @@
+2021-07-20 08:30:59,775 :: INFO :: Start experiment: fava-272563
+2021-07-20 08:30:59,788 :: INFO :: Control node : Starting of control node serial interface
+2021-07-20 08:30:59,799 :: INFO :: Control node : reset
+2021-07-20 08:30:59,810 :: INFO :: Reset Control Node
+2021-07-20 08:31:02,801 :: INFO :: Control node : start power of open node
+2021-07-20 08:31:02,855 :: INFO :: Node A8 : setup of a8 node
+2021-07-20 08:31:03,777 :: INFO :: Control node : Start experiment
+2021-07-20 08:31:03,812 :: INFO :: Control Node set time delay: 2227 us
+2021-07-20 08:31:03,847 :: INFO :: Control node : profile configuration
+2021-07-20 08:31:03,851 :: INFO :: Configure profile on Control Node
+2021-07-20 08:31:03,895 :: INFO :: Start experiment succeeded
+2021-07-20 08:31:13,620 :: INFO :: Update experiment profile
+2021-07-20 08:31:13,639 :: INFO :: Control node : profile configuration
+2021-07-20 08:31:13,647 :: INFO :: Configure profile on Control Node
+2021-07-20 08:31:39,157 :: INFO :: Boot A8 succeeded in time: 34s
+2021-07-20 08:42:09,016 :: INFO :: Gateway Manager : Stop experiment
+2021-07-20 08:42:09,034 :: INFO :: Stop experiment
+2021-07-20 08:42:09,050 :: INFO :: Control node : stop of the experiment
+2021-07-20 08:42:09,065 :: INFO :: Control node : profile configuration
+2021-07-20 08:42:09,079 :: INFO :: Configure profile on Control Node
+2021-07-20 08:42:09,218 :: INFO :: Control node : start power of open node
+2021-07-20 08:42:09,268 :: INFO :: Node A8 : teardown of a8 node
+2021-07-20 08:42:10,884 :: INFO :: Control node : Stop control node serial interface
+2021-07-20 08:42:10,894 :: INFO :: Control node : stop power of open node
+2021-07-20 08:42:11,033 :: INFO :: Control node : reset
+2021-07-20 08:42:11,045 :: INFO :: Reset Control Node
+2021-07-20 08:42:14,098 :: INFO :: Stop experiment succeeded
