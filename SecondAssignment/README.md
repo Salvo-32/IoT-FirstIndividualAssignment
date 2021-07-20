@@ -97,8 +97,8 @@ Each of the following points measure the performance of the whole IoT system in 
    2. ```iotlab-profile addm3 -n M3Monitoring1 --power dc -voltage -current -power -period 8244 -avg 4 -rssi -channels 22 26 -num 1 -rperiod 1000```
 5. Power monitoring concerns both A8 node and M3 nodes, while Wireless channel analysis concerns M3 boards only since they are the only one using 802.15.4 wireless technology
 6. For each experiment, wireless channel employed is the **26** one for every m3 board (Multi-hop wireless network) and it is GRAPHICALLY evaluated only at Border router because all the wireless devices make use of the same channel.. Textual results are available at [Evaluation folder](./Evaluation) of this repository, and they include channel analysis for endpoints.
-
 7.Next sections carry out graphical outcomes about the monitoring activities, for each node. 
+
 ### Experiment 272564 - 5 wireless nodes 
 The IoT-LAB experiment 272564 takes place in Saclay site, involving:
 * **5** endpoint nodes ```m3-2.saclay```, ```m3-4.saclay``` **-** ```m3-7.saclay``` 
@@ -117,11 +117,6 @@ To show the following result, the following shell command are used:
 9. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_5.oml --power --label "Endpoint (m3-5) - Power consumption analysis - Exp ID 272563"```![272563_m3-5_PowerMonitoring](./Evaluation/Picture/272563_m3-5_PowerMonitoring.png)
 10. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_6.oml --power --label "Endpoint (m3-6) - Power consumption analysis - Exp ID 272563"```![272563_m3-6_PowerMonitoring](./Evaluation/Picture/272563_m3-6_PowerMonitoring.png)
 11. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_7.oml --power --label "Endpoint (m3-7) - Power consumption analysis - Exp ID 272563"```![272563_m3-7_PowerMonitoring](./Evaluation/Picture/272563_m3-7_PowerMonitoring.png)
- 
-
-#### Network performance (end-to-end latency/throughput, quality of wireless communication channel)
-
-#### Energy consumption (duty cycling)
 
 ### 10 wireless nodes
 The IoT-LAB experiment 272564 takes place in Saclay site, involving:
@@ -147,17 +142,7 @@ To show the following result the following shell command are used:
 15. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_11.oml --power --label "Endpoint (m3-11) - Power consumption analysis - Exp ID 272564"```![272564_m3-11_PowerMonitoring](./Evaluation/Picture/272564_m3-11_PowerMonitoring.png)
 16. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_12.oml --power --label "Endpoint (m3-12) - Power consumption analysis - Exp ID 272564"```![272564_m3-12_PowerMonitoring](./Evaluation/Picture/272564_m3-12_PowerMonitoring.png)
 
-
-
-
-
-
-
-#### Network performance
-
-#### Energy consumption
-
-
 ### Conclusion
+As stated in the [Section](./## How-is-the-deployment-of-***multiple-sensors***-going-to-affect-the-IoT-platform/###Disadvantages-of-a-multi-hop-wireless-metwork) Depending on the radio environnement perturbations, you should measure a RSSI near -91 dBm with relative noise.
 
 
