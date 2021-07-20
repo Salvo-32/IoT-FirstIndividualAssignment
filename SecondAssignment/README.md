@@ -96,32 +96,27 @@ Each of the following points measure the performance of the whole IoT system in 
    1. ```iotlab-profile adda8 -n A8PowerMonitoring1 --power dc -voltage -current -power -period 8244 -avg 4```
    2. ```iotlab-profile addm3 -n M3Monitoring1 --power dc -voltage -current -power -period 8244 -avg 4 -rssi -channels 22 26 -num 1 -rperiod 1000```
 5. Power monitoring concerns both A8 node and M3 nodes, while Wireless channel analysis concerns M3 boards only since they are the only one using 802.15.4 wireless technology
-6. For each experiment, wireless channel employed is the **26** one for every m3 board (Multi-hop wireless network)
-7. **NOTE** Next sections carry out graphical outcomes about the monitoring activities, for each node. Textual results are available at [Evaluation folder](./Evaluation) of this repository
+6. For each experiment, wireless channel employed is the **26** one for every m3 board (Multi-hop wireless network) and it is GRAPHICALLY evaluated only at Border router because all the wireless devices make use of the same channel.. Textual results are available at [Evaluation folder](./Evaluation) of this repository, and they include channel analysis for endpoints.
 
+7.Next sections carry out graphical outcomes about the monitoring activities, for each node. 
 ### Experiment 272564 - 5 wireless nodes 
 The IoT-LAB experiment 272564 takes place in Saclay site, involving:
 * **5** endpoint nodes ```m3-2.saclay```, ```m3-4.saclay``` **-** ```m3-7.saclay``` 
 * 1 border router ```m3-1.saclay```
 * 1 MQTT bridge ```a8-2.saclay```
 
-To show the following result the following shell command are used:
+To show the following result, the following shell command are used:
 1. ```iotlab-experiment submit -n Henhouse -d 120 -l saclay,a8,2 -l saclay,m3,1+2+4-7```
 2. ```iotlab-node --profile A8PowerMonitoring1 -l saclay,a8,2```
 3. ```iotlab-node --profile M3Monitoring1 -l saclay,m3,1+2+4-7```
-4. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/a8_2.oml --power --label "A8-2 - Power consumption analysis - Exp ID 272563"```
-5. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272563"```
-6. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272563" --all```
-7. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Endpoint (m3-2) - Power consumption analysis - Exp ID 272563"```
-8. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Endpoint (m3-2) - Wireless channel analysis - Exp ID 272563" --all```
-9. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272563"```
-10. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272563" --all```
-11. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272563"```
-12. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272563" --all```
-13. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272563"```
-14. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272563" --all```
-15. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272563"```
-16. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272563" --all```
+4. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/a8_2.oml --power --label "A8-2 - Power consumption analysis - Exp ID 272563"``` ![272563_a8-2_PowerMonitoring](./Evaluation/Picture/272563_a8-2_PowerMonitoring.png)
+5. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272563"``` ![272563_m3-1_PowerMonitoring](./Evaluation/Picture/272563_m3-1_PowerMonitoring.png)
+6. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272563" --all``` ![272563_m3-1_ChannelMonitoring](./Evaluation/Picture/272563_m3-1_ChannelMonitoring.png)
+7. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_2.oml --power --label "Endpoint (m3-2) - Power consumption analysis - Exp ID 272563"``` ![272563_m3-2_PowerMonitoring](./Evaluation/Picture/272563_m3-2_PowerMonitoring.png)
+8. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_4.oml --power --label "Endpoint (m3-4) - Power consumption analysis - Exp ID 272563"``` ![272563_m3-4_PowerMonitoring](./Evaluation/Picture/272563_m3-4_PowerMonitoring.png)
+9. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_5.oml --power --label "Endpoint (m3-5) - Power consumption analysis - Exp ID 272563"```![272563_m3-5_PowerMonitoring](./Evaluation/Picture/272563_m3-5_PowerMonitoring.png)
+10. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_6.oml --power --label "Endpoint (m3-6) - Power consumption analysis - Exp ID 272563"```![272563_m3-6_PowerMonitoring](./Evaluation/Picture/272563_m3-6_PowerMonitoring.png)
+11. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_7.oml --power --label "Endpoint (m3-7) - Power consumption analysis - Exp ID 272563"```![272563_m3-7_PowerMonitoring](./Evaluation/Picture/272563_m3-7_PowerMonitoring.png)
  
 
 #### Network performance (end-to-end latency/throughput, quality of wireless communication channel)
@@ -138,8 +133,25 @@ To show the following result the following shell command are used:
 1. ```iotlab-experiment submit -n Henhouse -d 120 -l saclay,a8,2 -l saclay,m3,1+2+4-12```
 2. ```iotlab-node --profile A8PowerMonitoring1 -l saclay,a8,2```
 3. ```iotlab-node --profile M3Monitoring1 -l saclay,m3,1+2+4-12```
-4. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272564"```
-5. ```plot_oml_radio --input ~/.iot-lab/272564/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272564" --all```
+4. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/a8_2.oml --power --label "A8-2 - Power consumption analysis - Exp ID 272564"``` ![272564_a8-2_PowerMonitoring](./Evaluation/Picture/272564_a8-2_PowerMonitoring.png)
+5. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272564"``` ![272564_m3-1_PowerMonitoring](./Evaluation/Picture/272564_m3-1_PowerMonitoring.png)
+6. ```plot_oml_radio --input ~/.iot-lab/272564/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272564" --all``` ![272564_m3-1_ChannelMonitoring](./Evaluation/Picture/272564_m3-1_ChannelMonitoring.png)
+7. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_2.oml --power --label "Endpoint (m3-2) - Power consumption analysis - Exp ID 272564"``` ![272564_m3-2_PowerMonitoring](./Evaluation/Picture/272564_m3-2_PowerMonitoring.png)
+8. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_4.oml --power --label "Endpoint (m3-4) - Power consumption analysis - Exp ID 272564"``` ![272564_m3-4_PowerMonitoring](./Evaluation/Picture/272564_m3-4_PowerMonitoring.png)
+9. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_5.oml --power --label "Endpoint (m3-5) - Power consumption analysis - Exp ID 272564"```![272564_m3-5_PowerMonitoring](./Evaluation/Picture/272564_m3-5_PowerMonitoring.png)
+10. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_6.oml --power --label "Endpoint (m3-6) - Power consumption analysis - Exp ID 272564"```![272564_m3-6_PowerMonitoring](./Evaluation/Picture/272564_m3-6_PowerMonitoring.png)
+11. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_7.oml --power --label "Endpoint (m3-7) - Power consumption analysis - Exp ID 272564"```![272564_m3-7_PowerMonitoring](./Evaluation/Picture/272564_m3-7_PowerMonitoring.png)
+12. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_8.oml --power --label "Endpoint (m3-8) - Power consumption analysis - Exp ID 272564"```![272564_m3-8_PowerMonitoring](./Evaluation/Picture/272564_m3-8_PowerMonitoring.png)
+13. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_9.oml --power --label "Endpoint (m3-9) - Power consumption analysis - Exp ID 272564"```![272564_m3-9_PowerMonitoring](./Evaluation/Picture/272564_m3-9_PowerMonitoring.png)
+14. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_10.oml --power --label "Endpoint (m3-10) - Power consumption analysis - Exp ID 272564"```![272564_m3-10_PowerMonitoring](./Evaluation/Picture/272564_m3-10_PowerMonitoring.png)
+15. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_11.oml --power --label "Endpoint (m3-11) - Power consumption analysis - Exp ID 272564"```![272564_m3-11_PowerMonitoring](./Evaluation/Picture/272564_m3-11_PowerMonitoring.png)
+16. ```plot_oml_consum --input ~/.iot-lab/272564/consumption/m3_12.oml --power --label "Endpoint (m3-12) - Power consumption analysis - Exp ID 272564"```![272564_m3-12_PowerMonitoring](./Evaluation/Picture/272564_m3-12_PowerMonitoring.png)
+
+
+
+
+
+
 
 #### Network performance
 
