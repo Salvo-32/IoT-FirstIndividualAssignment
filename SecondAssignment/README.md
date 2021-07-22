@@ -33,7 +33,7 @@ Deploying multiple [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/
    2. Dealing with such an amount of information within a multi-hop wireless network, see [network diagram](./README.md/###Network-diagram-(Physical-devices-and-Protocols)), like the one in this system is less advantageous in term of number of exchanged packets per second. Since packets are forwarded from end point to border router through repeater nodes, then th number of packets per second is affected from each node performance. Poor intermediary node capabilities could low the whole network throughput, as weel as, the End-to-End delay
 2. Security
    1. Because of the need for intermediate nodes to forward packet toward its intended destination, every packet is vulnerable with respect to its intermediaries
-   2. Indeed these nodes could perform whatever function/computation in the packet, altering its content, replace it entireley, or deviate it from the intended destination. 
+   2. Indeed these nodes could perform whatever function/computation in the packet, altering its content, replacing it entireley, or deviating it from the intended destination. 
    3. In order to avoid wrong behaviours as much as possible, different techniques (CRC, hash functions) should be undertaken
 
 ## What are the connected components, the protocols to connect them and the overall IoT architecture
