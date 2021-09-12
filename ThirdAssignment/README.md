@@ -6,4 +6,4 @@ This time resulting system incorporates both the [first](./../FirstAssignment) a
 3. **Remote** [LoRaWAN](https://lora-alliance.org/about-lorawan/) network at [FIT Iot-LAB](www.iot-lab.info)
 
 Focus of the third assignment is the implementation of [IoT Edge Analytics](https://www.sisense.com/glossary/edge-analytics/)
-For further information, please refer to http://ichatz.me/Site/InternetOfThings2021-Assignment3
+- For further information, please refer to http://ichatz.me/Site/InternetOfThings2021-Assignment3
