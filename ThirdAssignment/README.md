@@ -69,19 +69,13 @@ The following diagram depicts all the physical devices employed in this assignme
 **NOTE** Previous First and Second individual assignments' network components are neither depicted again in the diagram above nor these are taken into account in the description below. (Look at the appropriate [First README](/FirstAssignment/README.md/####-Network-diagram-(Physical-devices-and-Protocols)), [Second README](/SecondAssignment/README.md/###-Network-diagram-(Physical-devices-and-Protocols)))
 
 From LEFT to RIGHT:
-1. [ST B-L072Z-LRWAN1](https://www.iot-lab.info/docs/boards/st-b-l072z-lrwan1/) boards (st-lrwan1-1 to st-lrwan1-25) on Saclay site make use of CMWX1ZZABZ-091 LoRa ® /Sigfox™ module by Murata, to exchange data over Europea LoRa frequency at 
-
-
-   1. ```m3-1.saclay``` acts as Border router namely it makes use of both 802.15.4 network technologies and 6LowPAN to interact with endpoints/simple nodes. Moreover like in the first assignment it uses an attached device/computer (in this case a mini-computer called Gateway (GW)) through ```ethos``` + ```UHCP``` to reach the IP network by FIT IoT-LAB. In fact as reported at [FIT IoT-LAB - Testbed Design](https://www.iot-lab.info/docs/getting-started/design/) each experimentation board called Open Node (ON) is integrated with a mini-computer called Gateway (GW), which in turn provide tools to evaluate BOARD performance and give access to the FIT IoT-LAB network.
-   2. ```m3-2.saclay``` - ```m3-11.saclay```board as end-points or single nodes. 
-      1. They sense temperature and light as in the previous assignment with same sampling rate, but using the integrated sensors ***LPS331AP*** and ***ISL29020*** Both the [IoT-LAB M3 web-page](https://www.iot-lab.info/docs/boards/iot-lab-m3/) and this [Official Jupyter Notebook](https://github.com/iot-lab/iot-lab-training/tree/master/riot/basics/sensors)) by FIT Iot-LAB provide detailed information about these two sensors and how to use them in [RIOT-OS](www.riot-os.org)
-      2. Publish these values using MQTTS messages using 802.15.4 network interface within the 6LowPAN network.
-      3. Hop-by-hop (node-by-node) MQTTS messages eventually reach first final destination: the Border router
-2. [IoT-LAB A8-M3](https://www.iot-lab.info/docs/boards/iot-lab-a8-m3/), which behaves as the Ubuntu Laptop from the first assignment
-   1. It is an MQTTS broker (RSMB) that receives insecure messages from the wireless mesh network endpoints, in turn bridged (transparent bridge) to the Eclipse Mosquitto MQTT Broker
-   2. It is an MQTT broker (Eclipse Mosquitto) that receive insecure messages from RSMB and forward them using TLS toward Amazon MQTT broker
-3. Amazon AWS MQTT broker, same as previous assignment, which exchange MQTT(TLS) messages with the above-mentioned [IoT-LAB A8-M3](https://www.iot-lab.info/docs/boards/iot-lab-a8-m3/)
-4. Frontend devices and Web-dashboard that exchange requests and responses using HTTPS, same as previous assignment
+1. [ST B-L072Z-LRWAN1](https://www.iot-lab.info/docs/boards/st-b-l072z-lrwan1/) boards (st-lrwan1-1 to st-lrwan1-25) that acts as enpoints.  
+   1. They sense temperature and light as in the previous assignment with same sampling rate, but using the integrated sensors ***HTS221*** and as stated inside Premise section above simulated light sensor.
+   2. They exploit CMWX1ZZABZ-091 LoRa ® /Sigfox™ module by Murata, to exchange data over European LoRa frequency at 860 MHz
+2. [Saclay LoRa gateway](https://www.thethingsnetwork.org/docs/gateways/), namely a device that acts as bridge between endpoint devices and LoRa Network Server of The Things Network. Devices use low power networks like LoRaWAN to connect to the Gateway, while the Gateway uses high bandwidth networks like WiFi, Ethernet or Cellular to connect to The Things Network. It is already configured by FIT IoT-Lab (In case of private gateway you have to configure it properly, please visit https://www.iot-lab.info/legacy/tutorials/riot-ttn/index.html)
+3. LoRaWAN Network Server LNS is a device that establishes a data connection between a LoRa Gateway and The Things Stack. Moreover it allows MQTT integration, i.e. acts as MQTT/AWS MQTT transpartent bridge. This means data reach AWS web-server using MQTT protocol over TCP/IP network, as in the previous assignment
+4. Amazon AWS MQTT broker, same as previous assignment, which exchange MQTT(TLS) messages with the above-mentioned LNS
+5. Frontend devices and (Web-server) Web-dashboard that exchange requests and responses using HTTPS, same as previous assignment
 
  
 In order to clearly understand how the physical devices and software components work together look at paragraph Overall high-level architecture diagram of the whole system
