@@ -18,31 +18,43 @@ The following points present new structure/diagram of the IoT system and its per
 ## How is the long-range low-power wide area network going to affect the IoT platform?
 ### Deployment of multiple sensors: Benefit
 Deploying multiple [ST B-L072Z-LRWAN1](https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html) boards, each one providing the **same** sensors (real temperature and simulated light) as the ones of the first individual assignment, surely implies a bigger amount of data available to be handled. This aspect leads several advantages and disadvantages
-1. Data quality
-  1. Temperature and light are [scalar physical quantities](https://en.wikipedia.org/wiki/Scalar_(physics)) (punctiform) therefore they change according to environmental position, namely with respect to the point in which the sensor performs measurement. 
-  2. In particular employing 10 different sensors (5  for temperature and 5 for light, belonging to **different boards**) spread all over the building surface on Saclay site, allow to get values from different points of the environment. (Conversely the architecture of the [first assigment](https://github.com/Salvo-32/IoT-IndividualAssignments/tree/main/FirstAssignment) provides values from a single point only)
-  3. Such a new architecture allows to carry out average temperature and brightness of whole environment (not only physical quantity from a limited portion of the environment as before) 
-  4. In this way, it is possible to get more accurate values for both quantities that are very close to the real values
+1. Data quality 
+   1. Temperature and light are [scalar physical quantities](https://en.wikipedia.org/wiki/Scalar_(physics)) (punctiform) therefore they change according to environmental position, namely with respect to the point in which the sensor performs measurement. 
+   2. In particular employing 10 different sensors (5  for temperature and 5 for light, belonging to **different boards**) spread all over the building surface on Saclay site, allow to get values from different points of the environment. (Conversely the architecture of the [first assigment](https://github.com/Salvo-32/IoT-IndividualAssignments/tree/main/FirstAssignment) provides values from a single point only)
+   3. Such a new architecture allows to carry out average temperature and brightness of whole environment (not only physical quantity from a limited portion of the environment as before) 
+   4. In this way, it is possible to get more accurate values for both quantities that are very close to the real values
 2. Fault tolerance
-  1. Exploiting different boards, each one with its set of sensors, grants continuity and availability of temperature and light values even if a set of sensors/boards stops working or carries out abnormal data due to malfunctioning. 
-  2. For example, right now (2021-09-12 17:35) on Saclay site ```st-lrwan1-8.saclay``` board is **unavailable/suspected**, as you can see from the picture below. If the IoT system relies only on that specific device then no data will be carried out, the web-dashboard will result always empty and the whole system will be useless. ![UnavailableBoard](Picture/UnavailableBoard.png)  
-  3. Moreover the possibility to perform aggregated computations for a specific physical property, through data coming from different positions at the same time, protects against wrong measurement values.
-    * In other words if you can trust the majority of the sensor values then even if there are few abnormal values, the outcome is still a reliable one (arithmetic mean).
+   1. Exploiting different boards, each one with its set of sensors, grants continuity and availability of temperature and light values even if a set of sensors/boards stops working or carries out abnormal data due to malfunctioning. 
+   2. For example, right now (2021-09-12 17:35) on Saclay site ```st-lrwan1-8.saclay``` board is **unavailable/suspected**, as you can see from the picture below. If the IoT system relies only on that specific device then no data will be carried out, the web-dashboard will result always empty and the whole system will be useless. ![UnavailableBoard](Picture/UnavailableBoard.png)  
+   3. Moreover the possibility to perform aggregated computations for a specific physical property, through data coming from different positions at the same time, protects against wrong measurement values.
+      * In other words if you can trust the majority of the sensor values then even if there are few abnormal values, the outcome is still a reliable one (arithmetic mean).
 3. Energy efficiency
-  1. Given that LoRaWAN network is a star network, each endpoint has same role and so energy consumption are pretty similar (conversely in previous assignment there are Boarder ROuter nodes and Endpoints node having different role and energy consumption) 
+   1. Given that LoRaWAN network is a star network, each endpoint has same role and so energy consumption are pretty similar (conversely in previous assignment there are Boarder ROuter nodes and Endpoints node having different role and energy consumption)
+   2. Since LPWAN (LNS) server employs adaptive transmission schema for each endpoint device and manages RF output of each one, then it improves/extends life of endpoint batteries
 
-### Disadvantages of a LoRa network: narrow-band wireless network
-Failure of gateway
-1. Throughput.
-   1. As stated in the introduction of this section, deploying multiple boards entails deal with a bigger amount of data wrt first individual assignment
-   2. Dealing with such an amount of information within a multi-hop wireless network, see [network diagram](./README.md/###Network-diagram-(Physical-devices-and-Protocols)), like the one in this system is less advantageous in term of number of exchanged packets per second. Since packets are forwarded from end point to border router through repeater nodes, then the number of packets per second is affected from each node performance. Poor intermediary node capabilities could low the whole network throughput, as well as, the End-to-End delay
-2. Security
+### Limitations of a LoRa network
+LoRaWAN network is a narrow-band wireless network, namely available bandwidth (125 kHz) is smaller than conventional wireless network like 802.11 or 2G/3G/4G/5G network. A small bandwidth implies the following unavoidable limitations:
+1. Packet size & Bitrate
+   1. LoRa allows for packets of 256 bytes max., i.e. very small-sized packet with respect to the ones of previous 802.15.4 network. 
+   2. Therefore, MQTT protocol is no more available directly over LoRa for end-point devices beacuse it can works with MB-sized packets. Consequently such a protocol should be implemented over the gateway (base station): whenever it receives small-sized packet from endpoints, extract its payload, build MQTT packet and sends over MQTT. (Indirect use of MQTT)
+   3. LoRa allows for different bitrate, in accordance with the [Spreading Factor - SF](https://www.thethingsnetwork.org/docs/lorawan/spreading-factors/) employed. In this project SF is  9 and so **max bitrate** is equal 1758 bps are allowed 
+3. End-to-end delay
+   1. As stated before, endpoints relies on base station/gateway before thier information reach back-end or whatever high-lvel service. This means end-to-end delay, i.e. time from IoT board to back-end grows due to packet conversion from LoRa packet to IP packet. Using a SF9 (Spreading factor of 9) implies a Time-on-Air of 205 ms for a 10 byte-sized packet, namely time needed to reach the gateway only, moreover delay of IP network must be added.
+4. LoRa Gateway: downlink & uplink communication 
+   1. LoRa gateway is a packet forwarer, placed between endpoints and LoRaWAN networks server (LNS) that is in charge of managing uplinks and downlinks:
+      * It receives LoRa packets from endpoint boards, converts to IP packets and them over a secure IP link to LoRaWAN network server (LNS)
+      * It receives IP packets from LNS , converts them to LoRa packets and send them to intended endpoint boards 
+   2. Given its fundamental intermediary role, if it fails then there is no communication between both networks
+5. Security
    1. Because of the need for intermediate nodes to forward packet toward its intended destination, every packet is vulnerable with respect to its intermediaries
    2. Indeed these nodes could perform whatever function/computation in the packet, altering its content, replacing it entirely, or deviating it from the intended destination. 
-   3. In order to avoid wrong behaviors as much as possible, different techniques (CRC, hash functions) should be undertaken
-2. Limitations of LoRaWAN network, a narrow-band wireless network
-3. Data aggregation operations
-4. Comparison of data quality (min, max, avg) at Cloud level vs. Edge level
+   3. In order to avoid wrong behaviors as much as possible, LoRa makes use of secure IP link and AES 128-bit algorithm 
+
+### Data aggregation operations
+Within such a constrained network Data Aggregation is needed, for example embedding of values from different sensors in a single pakcet. Thanks to Data Aggregation, number of LoRa packets decreases therefore less current peaks (less Energy consumption), but at the same time latency increases because packets are bigger (always within 256 bytes packet) than the packets containing single sensor type values
+
+### Comparison of data quality (min, max, avg) at Cloud level vs. Edge level
+Trivially, computation power at cloud level ensure high precision results, e.g average values from a set of sensor
 
 ## What are the connected components, the protocold to connect them and the overall IoT architecture?
 ### Network diagram (Physical devices and Protocols)
