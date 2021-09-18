@@ -82,17 +82,18 @@ In order to clearly understand how the physical devices and software components 
 ### Overall high-level architecture diagram of Software components
 This section shows inter-dependencies among the different software components. While the same paragraph of the first assignment provides a detailed description of each single software, here only new components are described 
 ![OverallArchitecture](./Picture/OverallArchitecture.jpg)
-1. A new RIOT firmware ```LoraHenhouse.elf``` provided [here main.c](./Firmware/Endpoint/main.c) for [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/) boards which allow them to act as end-points. Several lines of code are comment ones which describe the behavior of the whole firmware, please look at it before you go on. 
-   * Conversely, the local Nucleo F401RE board of the previous assignment still run the same firmware, sensing local environment and publishing MQTT messages just like before. As it is stated before, this board is still present in this assignment although this document does not take into account it.
-   * **NOTE** In this assignment I prefer having two different firmwares for FIT IoT-LAB M3 boards and one for NUCLEO F401RE board because:
-      * They implement two different physical pin configurations for sensors and actuators, in particular components from the first assignment make use of analog input interface and GPIO, conversely boards of the second assignment make use of drivers to connect to the desired sensors
-      * They rely on different network parameters (different local mqtts broker port and address), moreover different networks technology and topology
-2. The example firmware ```RIOT gnrc_border_router``` as it is described at [Official RIOT-OS GitHub repository](https://github.com/RIOT-OS/RIOT/tree/master/examples/gnrc_border_router), runs on top of the above-mentioned ```m3-1.saclay``` Border router
-   * One change with respect to the official tutorial concerns how to build the offcial source code: ```make ETHOS_BAUDRATE=500000 BOARD=iotlab-m3 ```. That value of baudrate comes from the intrinsic UART baudrate of M3 with which the board reaches the IP Network by IoT-LAB.
-
-3. Yocto OS + Eclipse RSMB + Eclipse Mosquitto run on top of [IoT-LAB A8-M3](https://www.iot-lab.info/docs/boards/iot-lab-a8-m3/) board, like in the previous asignment
-   * **NOTE** Yocto OS replace Ubuntu 20.04 of the first assignment, but behaves just like before. The [Yocto Project](https://www.iot-lab.info/docs/os/yocto/) is an open-source project which allows the creation of embedded Linux distributions. The project was announced by the Linux Foundation in 2010 and launched in March, 2011, in collaboration with 22 organizations. 
-4. AWS Webservices
+1. A new RIOT firmware ```LoraHenhouse.elf``` provided [here main.c](./Firmware/Endpoint/main.c) for [ST B-L072Z-LRWAN1](https://www.iot-lab.info/docs/boards/st-b-l072z-lrwan1/) boards which allows them to act as end-points. Several lines of code are comment ones which describe the behavior of the whole firmware, please look at it before you go on. 
+   * Conversely, the local Nucleo F401RE board of the previous assignment still run the same firmware, sensing local environment and publishing MQTT messages just like before. 
+   * **NOTE** Since each board require different set of unique keys, firmware must be compiled one for each device. 
+   * E.g. ```salvo@ubuntu: make DEVEUI=70B3D5ZID0045254 APPEUI=0000000000000000 APPKEY=F152FCCD151F4DE8CD0EC6635EB3BD81```
+   * Despite this small annotation, all the firmwares are identically the same
+3. As stated at [official TTN documentation](https://www.thethingsnetwork.org/docs/gateways/) Gateway may run on a:
+   1. Mminimal firmware, making them low-cost and easy to use, running only the packet forwarding software.
+   2. Operating system, for which the packet forwarding software is run as a background program (e.g. Kerlink IoT Station, Multitech Conduit). This gives more liberty to the gateway administrator to manage their gateway and to install their own software
+   Unfortunately, FIT IoT-LAB dos not provide any documentation about how the gateway is implemented
+4. The Things Stack (LNS implementation) which allows to manage and monitor devices and gateways with an extensive toolset (e.g. AWS integration) while routing data securely to the application. 
+   1. It offers dedicated tool for TheThingNetwork - Amazon AWS IoT Core integration 
+6. AWS Webservices
    1. AWS IoT Core adds a new Thing ```FITIoT-Lab```, which grants access to AWS IoT Core webservices using a new dedicated set of keys and certificates. 
       * To allow the local nucleo board and m3 boards access AWS IoT core at the same time, two different set of keys and certificates are rquired (One for each Thing)
       * Although current repository provides keys and certificates to access my Amazon AWS account at [Firmware/MqttBrokerBridge](./Firmware/MqttBrokerBridge) folder, these are currently not allowed from my personal account. If you want to try the whole system functioning, please contact me at ***Salvo.f96@gmail.com*** ![IotCoreThings](./Picture/IotCoreThings.png)
