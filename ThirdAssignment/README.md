@@ -1,22 +1,45 @@
 # IoT Third individual assignment
 The goal of this assignment is the deployment of a long-range low-power wide area network, made up of multiple MCUs ([ST B-L072Z-LRWAN1](https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html)), by using [LoRaWAN](https://lora-alliance.org/about-lorawan/) and [TheThingsNetwork](https://www.thethingsnetwork.org/) technologies. Simultaneously, like in previous assignments, performance of the whole system are evaluated. 
-This time resulting system incorporates both the [first](./../FirstAssignment) and [second](./../SecondAssignment) individual assignment functionalities, this means newer system is able to receive sensor values from the:
+This time resulting system incorporates both the [first](./../FirstAssignment) and [second](./../SecondAssignment) individual assignment functionalities, this means newer system is able to receive sensor values from:
 1. **Local** STM32 Nucleo F401RE, 
 2. **Remote** [802.15.4](https://en.wikipedia.org/wiki/IEEE_802.15.4) + [6LoWPAN](https://en.wikipedia.org/wiki/6LoWPAN) wireless mesh network at [FIT Iot-LAB](www.iot-lab.info)
 3. **Remote** [LoRaWAN](https://lora-alliance.org/about-lorawan/) network at [FIT Iot-LAB](www.iot-lab.info)
 
 Focus of the third assignment is the implementation of [IoT Edge Analytics](https://www.sisense.com/glossary/edge-analytics/)
-- For further information, please refer to http://ichatz.me/Site/InternetOfThings2021-Assignment3
+  * For further information, please refer to http://ichatz.me/Site/InternetOfThings2021-Assignment3
 
 ## Premise
-The long-range low-power wide area network is implemented inside the [Saclay deployment](https://www.iot-lab.info/docs/deployment/saclay/) from FIT IoT-LAB for the following reasons:
-1. As state in the [first assigment](https://github.com/Salvo-32/IoT-IndividualAssignments/tree/main/FirstAssignment#sensors), a temputerature sensor and a light sensor are needed. Since [ST B-L072Z-LRWAN1](https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html) board does not provide any kind of sensor (LoRa & SigFox communication module only), it needs a further expansion board (shield) on top it. The only site providing such a composed configuration is Saclay site, in fact here [ST B-L072Z-LRWAN1](https://www.iot-lab.info/docs/boards/st-b-l072z-lrwan1/) boards (st-lrwan1-1 to st-lrwan1-25) are equipped with the [ST X-NUCLEO-IKS01A2](https://www.st.com/en/ecosystems/x-nucleo-iks01a2.html) shield. This gives access to external sensors to the node, in particular to a temperature sensor HTS221.
-- Despite use of the expansion board above, [ST B-L072Z-LRWAN1](https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html) board is unable to sense light from the environment, therefore a light sensor is simulated inside its firmware (look at [main.c](./Firmware/Endpoint/main.c))
+The long-range low-power wide area network is implemented inside the [Saclay deployment](https://www.iot-lab.info/docs/deployment/saclay/) by FIT IoT-LAB for the following reasons:
+1. As stated in the [first assigment](https://github.com/Salvo-32/IoT-IndividualAssignments/tree/main/FirstAssignment#sensors), temputerature sensor and light sensor are needed. Since [ST B-L072Z-LRWAN1](https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html) board does not provide any kind of sensor (LoRa & SigFox communication module only), it needs a further expansion board (shield) on top it. The only site providing such an assembled configuration is Saclay site, in fact here [ST B-L072Z-LRWAN1](https://www.iot-lab.info/docs/boards/st-b-l072z-lrwan1/) boards (st-lrwan1-1 to st-lrwan1-25) are equipped with the [ST X-NUCLEO-IKS01A2](https://www.st.com/en/ecosystems/x-nucleo-iks01a2.html) shield. This gives access to external sensors to the node, in particular to a temperature sensor HTS221.
+2. Despite use of the expansion board above, [ST B-L072Z-LRWAN1](https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html) board is unable to sense light from the environment, therefore a light sensor is simulated through its firmware (look at [main.c](./Firmware/Endpoint/main.c))
  
-The following points address the new structure/diagram of the IoT system and its performance:
+The following points present new structure/diagram of the IoT system and its performance:
 
 ## How is the long-range low-power wide area network going to affect the IoT platform?
-1. Deployment of multiple sensors: Benefits
+### Deployment of multiple sensors: Benefit
+Deploying multiple [ST B-L072Z-LRWAN1](https://www.st.com/en/evaluation-tools/b-l072z-lrwan1.html) boards, each one providing the **same** sensors (real temperature and simulated light) as the ones of the first individual assignment, surely implies a bigger amount of data available to be handled. This aspect leads several advantages and disadvantages
+1. Data quality
+  1. Temperature and light are [scalar physical quantities](https://en.wikipedia.org/wiki/Scalar_(physics)) (punctiform) therefore they change according to environmental position, namely with respect to the point in which the sensor performs measurement. 
+  2. In particular employing 10 different sensors (5  for temperature and 5 for light, belonging to **different boards**) spread all over the building surface on Saclay site, allow to get values from different points of the environment. (Conversely the architecture of the [first assigment](https://github.com/Salvo-32/IoT-IndividualAssignments/tree/main/FirstAssignment) provides values from a single point only)
+  3. Such a new architecture allows to carry out average temperature and brightness of whole environment (not only physical quantity from a limited portion of the environment as before) 
+  4. In this way, it is possible to get more accurate values for both quantities that are very close to the real values
+2. Fault tolerance
+  1. Exploiting different boards, each one with its set of sensors, grants continuity and availability of temperature and light values even if a set of sensors/boards stops working or carries out abnormal data due to malfunctioning. 
+  2. For example, right now (2021-09-12 17:35) on Saclay site ```st-lrwan1-8.saclay``` board is **unavailable/suspected**, as you can see from the picture below. If the IoT system relies only on that specific device then no data will be carried out, the web-dashboard will result always empty and the whole system will be useless. ![UnavailableBoard](Picture/UnavailableBoard.png)  
+  3. Moreover the possibility to perform aggregated computations for a specific physical property, through data coming from different positions at the same time, protects against wrong measurement values.
+    * In other words if you can trust the majority of the sensor values then even if there are few abnormal values, the outcome is still a reliable one (arithmetic mean).
+3. Energy efficiency
+  1. Given that LoRaWAN network is a star network, each endpoint has same role and so energy consumption are pretty similar (conversely in previous assignment there are Boarder ROuter nodes and Endpoints node having different role and energy consumption) 
+
+### Disadvantages of a LoRa network: narrow-band wireless network
+Failure of gateway
+1. Throughput.
+   1. As stated in the introduction of this section, deploying multiple boards entails deal with a bigger amount of data wrt first individual assignment
+   2. Dealing with such an amount of information within a multi-hop wireless network, see [network diagram](./README.md/###Network-diagram-(Physical-devices-and-Protocols)), like the one in this system is less advantageous in term of number of exchanged packets per second. Since packets are forwarded from end point to border router through repeater nodes, then the number of packets per second is affected from each node performance. Poor intermediary node capabilities could low the whole network throughput, as well as, the End-to-End delay
+2. Security
+   1. Because of the need for intermediate nodes to forward packet toward its intended destination, every packet is vulnerable with respect to its intermediaries
+   2. Indeed these nodes could perform whatever function/computation in the packet, altering its content, replacing it entirely, or deviating it from the intended destination. 
+   3. In order to avoid wrong behaviors as much as possible, different techniques (CRC, hash functions) should be undertaken
 2. Limitations of LoRaWAN network, a narrow-band wireless network
 3. Data aggregation operations
 4. Comparison of data quality (min, max, avg) at Cloud level vs. Edge level
