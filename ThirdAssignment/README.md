@@ -73,17 +73,16 @@ From LEFT to RIGHT:
    1. They sense temperature and light as in the previous assignment with same sampling rate, but using the integrated sensors ***HTS221*** and as stated inside Premise section above simulated light sensor.
    2. They exploit CMWX1ZZABZ-091 LoRa ® /Sigfox™ module by Murata, to exchange data over European LoRa frequency at 860 MHz
 2. [Saclay LoRa gateway](https://www.thethingsnetwork.org/docs/gateways/), namely a device that acts as bridge between endpoint devices and LoRa Network Server of The Things Network. Devices use low power networks like LoRaWAN to connect to the Gateway, while the Gateway uses high bandwidth networks like WiFi, Ethernet or Cellular to connect to The Things Network. It is already configured by FIT IoT-Lab (In case of private gateway you have to configure it properly, please visit https://www.iot-lab.info/legacy/tutorials/riot-ttn/index.html)
-3. LoRaWAN Network Server LNS is a device that establishes a data connection between a LoRa Gateway and The Things Stack. Moreover it allows MQTT integration, i.e. acts as MQTT/AWS MQTT transpartent bridge. This means data reach AWS web-server using MQTT protocol over TCP/IP network, as in the previous assignment
-4. Amazon AWS MQTT broker, same as previous assignment, which exchange MQTT(TLS) messages with the above-mentioned LNS
+3. [LoRaWAN Network Server LNS](https://www.thethingsindustries.com/docs/gateways/lora-basics-station/lns/) is a device that establishes a data connection between a LoRa Gateway and The Things Stack. Moreover it allows MQTT integration, i.e. acts as MQTT/AWS MQTT transpartent bridge. This means data reach AWS web-server using MQTT protocol over TCP/IP network, as in the previous assignment
+4. [Amazon AWS MQTT broker](https://aws.amazon.com/), same as previous assignment, which exchange MQTT(TLS) messages with the above-mentioned LNS
 5. Frontend devices and (Web-server) Web-dashboard that exchange requests and responses using HTTPS, same as previous assignment
-
  
-In order to clearly understand how the physical devices and software components work together look at paragraph Overall high-level architecture diagram of the whole system
+In order to clearly understand how the physical devices and software components work together look at paragraph below
 
 ### Overall high-level architecture diagram of Software components
 This section shows inter-dependencies among the different software components. While the same paragraph of the first assignment provides a detailed description of each single software, here only new components are described 
 ![OverallArchitecture](./Picture/OverallArchitecture.jpg)
-1. A new RIOT firmware ```Henhouse_4.elf``` provided [here main.c](./Firmware/SimpleNode/iotlab-m3/main.c) for [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/) boards which allow them to act as end-points. Several lines of code are comment ones which describe the behavior of the whole firmware, please look at it before you go on. 
+1. A new RIOT firmware ```LoraHenhouse.elf``` provided [here main.c](./Firmware/Endpoint/main.c) for [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/) boards which allow them to act as end-points. Several lines of code are comment ones which describe the behavior of the whole firmware, please look at it before you go on. 
    * Conversely, the local Nucleo F401RE board of the previous assignment still run the same firmware, sensing local environment and publishing MQTT messages just like before. As it is stated before, this board is still present in this assignment although this document does not take into account it.
    * **NOTE** In this assignment I prefer having two different firmwares for FIT IoT-LAB M3 boards and one for NUCLEO F401RE board because:
       * They implement two different physical pin configurations for sensors and actuators, in particular components from the first assignment make use of analog input interface and GPIO, conversely boards of the second assignment make use of drivers to connect to the desired sensors
