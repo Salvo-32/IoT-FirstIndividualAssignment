@@ -54,17 +54,22 @@ LoRaWAN network is a narrow-band wireless network, namely available bandwidth (1
 Within such a constrained network Data Aggregation is needed, for example embedding of values from different sensors in a single pakcet. Thanks to Data Aggregation, number of LoRa packets decreases therefore less current peaks (less Energy consumption), but at the same time latency increases because packets are bigger (always within 256 bytes packet) than the packets containing single sensor type values
 
 ### Comparison of data quality (min, max, avg) at Cloud level vs. Edge level
-Trivially, computation power at cloud level ensure high precision results, e.g average values from a set of sensor
 
-## What are the connected components, the protocold to connect them and the overall IoT architecture?
+   Operation | **Cloud level** | **Edge level**
+   --------- | ----------- | ----------
+   **Energy cost** | Negligible, because of unlimited power resource | Too costly, battery-powered device should avoid heavy processing 
+   **Processing time** | Fast, because high computational power (Dedicated CPU)| Slow, because of low  computational power (MCU)
+   **Processing cost** | Depending on billing model, "pay per use”, “lease it”, “pay for it” | Free of charge
+
+## What are the connected components, the protocol to connect them and the overall IoT architecture?
 ### Network diagram (Physical devices and Protocols)
-The following diagram depicts all the physical devices employed in this project and relative network protocols used to interconnect each other
+The following diagram depicts all the physical devices employed in this assignment and relative network protocols used to interconnect each other
 ![PhysicalNetworkDiagram](./Picture/PhysicalNetworkDiagram.jpg)
 
-**NOTE** First individual assignment's network components are neither depicted again in the diagram above nor these are taken into account in the description below. (Look at the appropriate [document](/FirstAssignment/README.md/####-Network-diagram-(Physical-devices-and-Protocols)))
+**NOTE** Previous First and Second individual assignments' network components are neither depicted again in the diagram above nor these are taken into account in the description below. (Look at the appropriate [First README](/FirstAssignment/README.md/####-Network-diagram-(Physical-devices-and-Protocols)), [Second README](/SecondAssignment/README.md/###-Network-diagram-(Physical-devices-and-Protocols)))
 
 From LEFT to RIGHT:
-1. Aavailable [ST B-L072Z-LRWAN1](https://www.iot-lab.info/docs/boards/st-b-l072z-lrwan1/) boards (st-lrwan1-1 to st-lrwan1-25) on Saclay site make use of CMWX1ZZABZ-091 LoRa ® /Sigfox™ module by Murata, to exchange data over Europea LoRa frequency at 
+1. [ST B-L072Z-LRWAN1](https://www.iot-lab.info/docs/boards/st-b-l072z-lrwan1/) boards (st-lrwan1-1 to st-lrwan1-25) on Saclay site make use of CMWX1ZZABZ-091 LoRa ® /Sigfox™ module by Murata, to exchange data over Europea LoRa frequency at 
 
 
    1. ```m3-1.saclay``` acts as Border router namely it makes use of both 802.15.4 network technologies and 6LowPAN to interact with endpoints/simple nodes. Moreover like in the first assignment it uses an attached device/computer (in this case a mini-computer called Gateway (GW)) through ```ethos``` + ```UHCP``` to reach the IP network by FIT IoT-LAB. In fact as reported at [FIT IoT-LAB - Testbed Design](https://www.iot-lab.info/docs/getting-started/design/) each experimentation board called Open Node (ON) is integrated with a mini-computer called Gateway (GW), which in turn provide tools to evaluate BOARD performance and give access to the FIT IoT-LAB network.
