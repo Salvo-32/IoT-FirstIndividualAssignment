@@ -52,6 +52,7 @@ LoRaWAN network is a narrow-band wireless network, namely available bandwidth (1
 
 ### Data aggregation operations
 Within such a constrained network Data Aggregation is needed, for example embedding of values from different sensors in a single pakcet. Thanks to Data Aggregation, number of LoRa packets decreases therefore less current peaks (less Energy consumption), but at the same time latency increases because packets are bigger (always within 256 bytes packet) than the packets containing single sensor type values
+   ![DataAggregation](./Picture/DataAggregation.png)
 
 ### Comparison of data quality (min, max, avg) at Cloud level vs. Edge level
 
@@ -100,10 +101,8 @@ This section shows inter-dependencies among the different software components. W
       ![TTN-AWS-Integration.png](./Picture/TTN-AWS-Integration.png)
    4. At the end, TTN application dashboard should look like the one below: ![TTN-AppBoard.png](TTN-AppBoard.png)
 6. AWS Webservices
-   1. AWS IoT Core adds automatically one thing per ache registrated devices in TTN Application dashboarda new Thing ```FITIoT-Lab```, which grants access to AWS IoT Core webservices using a new dedicated set of keys and certificates. 
-      * To allow the local nucleo board and m3 boards access AWS IoT core at the same time, two different set of keys and certificates are rquired (One for each Thing)
-      * Although current repository provides keys and certificates to access my Amazon AWS account at [Firmware/MqttBrokerBridge](./Firmware/MqttBrokerBridge) folder, these are currently not allowed from my personal account. If you want to try the whole system functioning, please contact me at ***Salvo.f96@gmail.com*** ![IotCoreThings](./Picture/IotCoreThings.png)
-      
+   1. AWS IoT Core adds automatically one IoT thing per each registrated devices in TTN Application dashboard. This is due to TTN-AWS Integration described in the previous paragraph. As always every AWS IoT Thing can access AWS IoT Core webservices using a new dedicated set of keys and certificates. 
+      * Although current repository provides keys and certificates to access my Amazon AWS account, these are currently not allowed from my personal account. If you want to try the whole system functioning, please contact me at ***Salvo.f96@gmail.com*** ![IotCoreThings](./Picture/IotCoreThings.png)
       * IoT Rules (Temperature and Light rule) are the same as before
    4. AWS DynamoDB the same as before
    5. AWS S3 hosts a new version of web-dashboard ```index3.html```, more additional details about its source code are provided below ![S3Bucket](./Picture/S3Bucket.png)
@@ -111,38 +110,40 @@ This section shows inter-dependencies among the different software components. W
    ![index2](./Picture/index3.png)  
 
 ## How do you measure the performance of the system
-Each of the following points measure the performance of the whole IoT system in term of Energy efficiency (Power/Current/Voltage monitoring) and Wireless channel analysis, as the number of wireless node increase and consequently their physical locations vary. 
+Each of the following points measures performance of the whole IoT system in term of Energy efficiency (Power/Current/Voltage monitoring)
 1. Power monitoring follows the official [Consumption monitoring guidelines](https://www.iot-lab.info/docs/tools/consumption-monitoring/) by FIT IoT-LAB, , please look at it to set up monitoring activity 
 ![StlrwanMonitoringProfile](./Evaluation/Picture/StlrwanMonitoringProfile.png)
-2. Here there is the list used to set up profiles above  (they take place at fava@saclay):
+2. Here there is the [command list](./Firmware/LoRa-Henhouse_Commands.txt) used to set up profiles above  (they take place at fava@saclay):
    1. ```iotlab-profile addother -n stlrwan1_monitoring --power dc -voltage -current -power -period 8244 -avg 4 -rssi -channels 22 26 -num 1 -rperiod 1000```
    2. ```iotlab-node --profile stlrwan1_monitoring -l saclay,st-lrwan1,1-5```
 3. Textual results are available at [Evaluation folder](./Evaluation) of this repository, and they include raw analysis files for each endpoint.
 4. Next sections carry out graphical outcomes about the monitoring activities, for each node. 
 
 ### Experiment 277056 - 5 wireless nodes 
-The IoT-LAB experiment 272564 takes place in Saclay site, involving:
-* **5** endpoint nodes ```sm3-2.saclay```, ```m3-4.saclay``` **-** ```m3-7.saclay``` 
-* 1 border router ```m3-1.saclay```
-* 1 MQTT bridge ```a8-2.saclay```
+The IoT-LAB experiment 277056 takes place at Saclay site, involving:
+* **5** endpoint nodes ```st-lrwan1-1```, ```st-lrwan1-2```, ```st-lrwan1-3```, ```st-lrwan1-4```, ```st-lrwan1-5``` 
+* Saclay LoRa Gateway
 
-To show the following result, the following shell command are used:
-1. ```iotlab-experiment submit -n Henhouse -d 120 -l saclay,a8,2 -l saclay,m3,1+2+4-7```
-2. ```iotlab-node --profile A8PowerMonitoring1 -l saclay,a8,2```
-3. ```iotlab-node --profile M3Monitoring1 -l saclay,m3,1+2+4-7```
-4. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/a8_2.oml --power --label "A8-2 - Power consumption analysis - Exp ID 272563"``` ![272563_a8-2_PowerMonitoring](./Evaluation/Picture/272563_a8-2_PowerMonitoring.png)
-5. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_1.oml --power --label "Border router (m3-1) - Power consumption analysis - Exp ID 272563"``` ![272563_m3-1_PowerMonitoring](./Evaluation/Picture/272563_m3-1_PowerMonitoring.png)
-6. ```plot_oml_radio --input ~/.iot-lab/272563/radio/m3_1.oml --label "Border router (m3-1) - Wireless channel analysis - Exp ID 272563" --all``` ![272563_m3-1_ChannelMonitoring](./Evaluation/Picture/272563_m3-1_ChannelMonitoring.png)
-7. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_2.oml --power --label "Endpoint (m3-2) - Power consumption analysis - Exp ID 272563"``` ![272563_m3-2_PowerMonitoring](./Evaluation/Picture/272563_m3-2_PowerMonitoring.png)
-8. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_4.oml --power --label "Endpoint (m3-4) - Power consumption analysis - Exp ID 272563"``` ![272563_m3-4_PowerMonitoring](./Evaluation/Picture/272563_m3-4_PowerMonitoring.png)
-9. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_5.oml --power --label "Endpoint (m3-5) - Power consumption analysis - Exp ID 272563"```![272563_m3-5_PowerMonitoring](./Evaluation/Picture/272563_m3-5_PowerMonitoring.png)
-10. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_6.oml --power --label "Endpoint (m3-6) - Power consumption analysis - Exp ID 272563"```![272563_m3-6_PowerMonitoring](./Evaluation/Picture/272563_m3-6_PowerMonitoring.png)
-11. ```plot_oml_consum --input ~/.iot-lab/272563/consumption/m3_7.oml --power --label "Endpoint (m3-7) - Power consumption analysis - Exp ID 272563"```![272563_m3-7_PowerMonitoring](./Evaluation/Picture/272563_m3-7_PowerMonitoring.png)
+To show the following result, the following shell commands are used (which belong to [general command list](./Firmware/LoRa-Henhouse_Commands.txt)):
+1. ```iotlab-experiment submit -n LoraHenhouse -d 120 -l saclay,st-lrwan1,1-5
+2. ```iotlab-node --profile stlrwan1_monitoring -l saclay,st-lrwan1,1-5```
+3. ```plot_oml_consum --input ~/.iot-lab/277056/consumption/st_lrwan1_1.oml --power --label "Endpoint (stlrwan1-1) - Power consumption analysis - Exp ID 277056"``` 
+  ![277056_stlrwan1-1_PowerMonitoring](./Picture/Evaluation/277056_stlrwan1-1_PowerMonitoring.png)
+4. ```plot_oml_consum --input ~/.iot-lab/277056/consumption/st_lrwan1_2.oml --power --label "Endpoint (stlrwan1-2) - Power consumption analysis - Exp ID 277056"```
+  ![277056_stlrwan1-2_PowerMonitoring](./Picture/Evaluation/277056_stlrwan1-2_PowerMonitoring.png)
+5. ```plot_oml_consum --input ~/.iot-lab/277056/consumption/st_lrwan1_3.oml --power --label "Endpoint (stlrwan1-3) - Power consumption analysis - Exp ID 277056"```
+  ![277056_stlrwan1-3_PowerMonitoring](./Picture/Evaluation/277056_stlrwan1-3_PowerMonitoring.png)
+6. ```plot_oml_consum --input ~/.iot-lab/277056/consumption/st_lrwan1_4.oml --power --label "Endpoint (stlrwan1-4) - Power consumption analysis - Exp ID 277056"```
+  ![277056_stlrwan1-4_PowerMonitoring](./Picture/Evaluation/277056_stlrwan1-4_PowerMonitoring.png)
+7. ```plot_oml_consum --input ~/.iot-lab/277056/consumption/st_lrwan1_5.oml --power --label "Endpoint (stlrwan1-5) - Power consumption analysis - Exp ID 277056"```
+  ![277056_stlrwan1-5_PowerMonitoring](./Picture/Evaluation/277056_stlrwan1-5_PowerMonitoring.png)
 
-## Conclusion & Results
-1. As you can infer from the graphs above as the number of wireless nodes increases ```m3-1.saclay``` border router's power consumption increases. In particular, its first power consumption graph (m3-1.saclay) shows few peaks around 0.12 W with an average value of 0.11 W, conversely the second one shows much more peaks around 0.14 W and an average values of 0.12 W.
-2. Since during both experiments there were not running experiments on Saclay site, border router's wireless channel analysis shows an RSSI near -91 dBm without noise. This means transceiver were able to exchange data without external noise in that frequency band (channel 26). Nevertheless depending on the radio environment perturbations, you could measure worse RSSI values with relative noise, that will damage wireless links.
-3. As stated in the [Disadvantages of a multi-hop wireless network](./README.md#disadvantages-of-a-multi-hop-wireless-network) above, deploying multiple IoT-LAB M3 boards, surely implies a bigger amount of data available to be handled. It is absolutely clear looking at both the graphs of MQTTS/MQTT broker ```a8-2.saclay```, they show an harder power consumption activity that grows as the number of MQTTS message grows (second experiment)
+### Conclusion & Results
+1. As you can infer from the graphs above, using [LoraHenhouse firmware](./Firmware/Endpoint/main.c) each node presents very similar power consumption functions. This is due STAR network topology employed, i.e. each board is independent from the others (all the same role) and no board relies on neighbourhood as in the second assignmnent. 
+2. In particular, at start-up when board performs LoRa Join operation, it reachs a peak of 0.395 W. This is the most expensive operation. 
+3. Other periodic peaks of 0.284 W refer to LoRa packet sendings, in fact periodically ```aggregation_thread()```, shown in [Data Aggregation section](#data-aggregation-operations) wake-up periodically (light_sample_rate) and perform data transmission over LoRa.
+4. ```temperature_thread()``` and ```light_thread()``` ith an average value of 0.11 W, conversely the second one shows much more peaks around 0.14 W and an average values of 0.12 W.
+5. As stated in the [Disadvantages of a multi-hop wireless network](./README.md#disadvantages-of-a-multi-hop-wireless-network) above, deploying multiple IoT-LAB M3 boards, surely implies a bigger amount of data available to be handled. It is absolutely clear looking at both the graphs of MQTTS/MQTT broker ```a8-2.saclay```, they show an harder power consumption activity that grows as the number of MQTTS message grows (second experiment)
 
 ## Sources
 1. https://iot-lab.github.io/docs/boards/st-b-l072z-lrwan1/
