@@ -1,0 +1,63 @@
+salvo@ubuntu: ssh fava@saclay.iot-lab.info
+fava@saclay: iotlab-auth -u fava -p 3274riOTLAB
+fava@saclay: iotlab-profile addother -n stlrwan1_monitoring --power dc -voltage -current -power -period 8244 -avg 4 -rssi -channels 22 26 -num 1 -rperiod 1000
+fava@saclay: iotlab-experiment submit -n LoraHenhouse -d 120 -l saclay,st-lrwan1,1-5
+fava@saclay: iotlab-experiment wait
+fava@saclay: iotlab-node --profile stlrwan1_monitoring -l saclay,st-lrwan1,1-5  // iotlab-node --help
+
+// Endpoint  st-lrwan1,X-Y
+salvo@ubuntu: cd /home/salvo/Desktop/IoT/IndividualAssignment/03/Firmware/02_Sensors-DataAggregation
+salvo@ubuntu: make DEVEUI=70B3D57ED0045254 APPEUI=0000000000000000 APPKEY=F159FCCD151F4DE8CD0EC6635EB3BD89
+salvo@ubuntu: scp ./bin/b-l072z-lrwan1/LoraHenhouse.elf fava@saclay.iot-lab.info:/senslab/users/fava/shared/
+
+[ // 5 end-points
+salvo@ubuntu: ssh -X fava@saclay.iot-lab.info;
+fava@saclay: iotlab-auth -u fava -p 3274riOTLAB;
+fava@saclay: nc st-lrwan1-1 20000;
+
+salvo@ubuntu: ssh -X fava@saclay.iot-lab.info;
+fava@saclay: nc st-lrwan1-2 20000;
+
+salvo@ubuntu: ssh -X fava@saclay.iot-lab.info;
+fava@saclay: nc st-lrwan1-3 20000;
+
+salvo@ubuntu: ssh -X fava@saclay.iot-lab.info;
+fava@saclay: nc st-lrwan1-4 20000;
+
+salvo@ubuntu: ssh -X fava@saclay.iot-lab.info;
+fava@saclay: nc st-lrwan1-5 20000;
+
+salvo@ubuntu: ssh -X fava@saclay.iot-lab.info;
+fava@saclay: nc st-lrwan1-6 20000;
+
+Or in alternative: (https://www.iot-lab.info/docs/tools/serial-aggregator/)
+fava@saclay: serial_aggregator 
+]
+
+[ // 10 end-points (https://www.iot-lab.info/docs/tools/serial-aggregator/)
+salvo@ubuntu: ssh -X fava@saclay.iot-lab.info;
+fava@saclay: iotlab-auth -u fava -p 3274riOTLAB;
+fava@saclay: serial_aggregator 
+]
+
+salvo@ubuntu: ssh -X fava@saclay.iot-lab.info
+fava@saclay: iotlab-auth -u fava -p 3274riOTLAB
+fava@saclay: iotlab-node --flash /senslab/users/fava/shared/LoraHenhouse.elf -l saclay,st-lrwan1,1-5
+	//Wait 10 minute till performance evaluation goes on
+fava@saclay: iotlab-experiment stop;
+
+// View performance evaluation graphs (Power & Radio)
+salvo@ubuntu: ssh -X fava@saclay.iot-lab.info
+fava@saclay: less ~/.iot-lab/last/consumption/st_lrwan1_1.oml
+
+//	Power
+fava@saclay: plot_oml_consum --input ~/.iot-lab/277056/consumption/st_lrwan1_1.oml --power --label "Endpoint (st-lrwan1-1) - Power consumption analysis - Exp ID 277056"
+fava@saclay: plot_oml_consum --input ~/.iot-lab/277056/consumption/st_lrwan1_2.oml --power --label "Endpoint (st-lrwan1-2) - Power consumption analysis - Exp ID 277056"
+fava@saclay: plot_oml_consum --input ~/.iot-lab/277056/consumption/st_lrwan1_3.oml --power --label "Endpoint (st-lrwan1-3) - Power consumption analysis - Exp ID 277056"
+fava@saclay: plot_oml_consum --input ~/.iot-lab/277056/consumption/st_lrwan1_4.oml --power --label "Endpoint (st-lrwan1-4) - Power consumption analysis - Exp ID 277056"
+fava@saclay: plot_oml_consum --input ~/.iot-lab/277056/consumption/st_lrwan1_5.oml --power --label "Endpoint (st-lrwan1-5) - Power consumption analysis - Exp ID 277056"
+
+// Radio
+fava@saclay: less ~/.iot-lab/<experiment id>/radio/st_lrwan1_1.oml 
+fava@saclay: plot_oml_radio --input ~/.iot-lab/277056/radio/st_lrwan1_1.oml --label "Endpoint (st-lrwan1-1) - Wireless channel analysis - Exp ID 277056" --plot
+[ fava@saclay: plot_oml_radio --input ~/.iot-lab/277056/radio/st_lrwan1_1.oml --label "Endpoint (st-lrwan1-5) - Wireless channel analysis - Exp ID 277056" --all ]
