@@ -128,15 +128,15 @@ To show the following result, the following shell commands are used (which belon
 1. ```iotlab-experiment submit -n LoraHenhouse -d 120 -l saclay,st-lrwan1,1-5
 2. ```iotlab-node --profile stlrwan1_monitoring -l saclay,st-lrwan1,1-5```
 3. ```plot_oml_consum --input ~/.iot-lab/277066/consumption/st_lrwan1_1.oml --power --label "Endpoint (stlrwan1-1) - Power consumption analysis - Exp ID 277066"``` 
-  ![277066_stlrwan1-1_PowerMonitoring](./Evaluation/Picture/277066_stlrwan1-1_PowerMonitoring.png)
+  ![277066_stlrwan1-1_PowerMonitoring](./Evaluation/Picture/277066_st-lrwan1-1_PowerMonitoring.png)
 4. ```plot_oml_consum --input ~/.iot-lab/277066/consumption/st_lrwan1_2.oml --power --label "Endpoint (stlrwan1-2) - Power consumption analysis - Exp ID 277066"```
-  ![277066_stlrwan1-2_PowerMonitoring](./Evaluation/Picture/277066_stlrwan1-2_PowerMonitoring.png)
+  ![277066_stlrwan1-2_PowerMonitoring](./Evaluation/Picture/277066_st-lrwan1-2_PowerMonitoring.png)
 5. ```plot_oml_consum --input ~/.iot-lab/277066/consumption/st_lrwan1_3.oml --power --label "Endpoint (stlrwan1-3) - Power consumption analysis - Exp ID 277066"```
-  ![277066_stlrwan1-3_PowerMonitoring](./Evaluation/Picture/277066_stlrwan1-3_PowerMonitoring.png)
+  ![277066_stlrwan1-3_PowerMonitoring](./Evaluation/Picture/277066_st-lrwan1-3_PowerMonitoring.png)
 6. ```plot_oml_consum --input ~/.iot-lab/277066/consumption/st_lrwan1_4.oml --power --label "Endpoint (stlrwan1-4) - Power consumption analysis - Exp ID 277066"```
-  ![277066_stlrwan1-4_PowerMonitoring](./Evaluation/Picture/277066_stlrwan1-4_PowerMonitoring.png)
+  ![277066_stlrwan1-4_PowerMonitoring](./Evaluation/Picture/277066_st-lrwan1-4_PowerMonitoring.png)
 7. ```plot_oml_consum --input ~/.iot-lab/277066/consumption/st_lrwan1_5.oml --power --label "Endpoint (stlrwan1-5) - Power consumption analysis - Exp ID 277066"```
-  ![277066_stlrwan1-5_PowerMonitoring](./Evaluation/Picture/277066_stlrwan1-5_PowerMonitoring.png)
+  ![277066_stlrwan1-5_PowerMonitoring](./Evaluation/Picture/277066_st-lrwan1-5_PowerMonitoring.png)
 
 ### Conclusion & Results
 1. As you can infer from the graphs above, using [LoraHenhouse firmware](./Firmware/Endpoint/main.c) each node presents very similar power consumption functions. This is due STAR network topology employed, i.e. each board is independent from the others (all the same role) and no board relies on neighbourhood as in the second assignmnent. 
