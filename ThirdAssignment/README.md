@@ -125,7 +125,7 @@ The IoT-LAB experiment 277056 takes place at Saclay site, involving:
 * Saclay LoRa Gateway
 
 To show the following result, the following shell commands are used (which belong to [general command list](./Firmware/LoRa-Henhouse_Commands.txt)):
-1. ```iotlab-experiment submit -n LoraHenhouse -d 120 -l saclay,st-lrwan1,1-5
+1. ```iotlab-experiment submit -n LoraHenhouse -d 120 -l saclay,st-lrwan1,1-5```
 2. ```iotlab-node --profile stlrwan1_monitoring -l saclay,st-lrwan1,1-5```
 3. ```plot_oml_consum --input ~/.iot-lab/277066/consumption/st_lrwan1_1.oml --power --label "Endpoint (stlrwan1-1) - Power consumption analysis - Exp ID 277066"``` 
   ![277066_stlrwan1-1_PowerMonitoring](./Evaluation/Picture/277066_st-lrwan1-1_PowerMonitoring.png)
@@ -140,10 +140,10 @@ To show the following result, the following shell commands are used (which belon
 
 ### Conclusion & Results
 1. As you can infer from the graphs above, using [LoraHenhouse firmware](./Firmware/Endpoint/main.c) each node presents very similar power consumption functions. This is due STAR network topology employed, i.e. each board is independent from the others (all the same role) and no board relies on neighbourhood as in the second assignmnent. 
-2. In particular, at start-up when board performs LoRa Join operation, it reachs a peak of 0.395 W. This is the most expensive operation. 
-3. Other periodic peaks of 0.284 W refer to LoRa packet sendings, in fact periodically ```aggregation_thread()```, shown in [Data Aggregation section](#data-aggregation-operations) wake-up periodically (light_sample_rate) and perform data transmission over LoRa.
-4. ```temperature_thread()``` and ```light_thread()``` contribution  an average value of 0.11 W, conversely the second one shows much more peaks around 0.14 W and an average values of 0.12 W.
-5. As stated in the [Disadvantages of a multi-hop wireless network](./#disadvantages-of-a-multi-hop-wireless-network) above, deploying multiple IoT-LAB M3 boards, surely implies a bigger amount of data available to be handled. It is absolutely clear looking at both the graphs of MQTTS/MQTT broker ```a8-2.saclay```, they show an harder power consumption activity that grows as the number of MQTTS message grows (second experiment)
+2. In particular, at start-up when a board executes LoRa Join operation, it reachs a peak of 0.395 W that is the most expensive operation. 
+3. Other periodic relevant peaks of 0.284 W refer to LoRa packet sendings, in fact periodically ```aggregation_thread()```, shown in [Data Aggregation section](#data-aggregation-operations) wakes-up (at light_sample_rate) and performs data transmission over LoRa.
+4. ```temperature_thread()``` and ```light_thread()``` contribution appears between two consecutive 0.284 W peaks, with an average value of 0.273 W
+5. Such a star LoRa Network topology brings a dangerous drawback, that is deploying one single LoRa Gaetweay. Namely, if it fails then there is no communication between both networks, therefore it would be better to foresee back-up LoRa basic stations. These ones would grant fault-tolerance by replication and stability
 
 ## Sources
 1. https://iot-lab.github.io/docs/boards/st-b-l072z-lrwan1/
