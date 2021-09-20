@@ -9,6 +9,12 @@ For further information about the assignments refer to the links below
 2. [Second assignment](./SecondAssignment)
 3. [Third assignment](./ThirdAssignment)
 
+## Demo
+[IoT Henhouse - Youtube video](www.youtube.com)
+
+## Blog
+[IoT Henhouse - Hackster.io Blog] https://www.hackster.io/salvof/henhouse-1679da
+
 ## IoT-Lab Quotation
 Both the second and third assignments involve the use of FIT IoT-LAB: 
 > an accurate and efficient scientific tool, built to help and foster the design, development, tuning, and experimentation of large scale IoT applications
