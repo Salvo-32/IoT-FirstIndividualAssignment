@@ -13,7 +13,7 @@ For further information about the assignments refer to the links below
 [IoT Henhouse - Youtube video](www.youtube.com)
 
 ## Blog
-[IoT Henhouse - Hackster.io Blog] https://www.hackster.io/salvof/henhouse-1679da
+[IoT Henhouse - Hackster.io Blog](https://www.hackster.io/salvof/henhouse-1679da)
 
 ## IoT-Lab Quotation
 Both the second and third assignments involve the use of FIT IoT-LAB: 
