@@ -10,7 +10,7 @@ For further information about the assignments refer to the links below
 3. [Third assignment](./ThirdAssignment)
 
 ## Demo
-[IoT Henhouse - Youtube video](www.youtube.com)
+[IoT Henhouse - Youtube video](https://youtu.be/8knO_vw_OAU)
 
 ## Blog
 [IoT Henhouse - Hackster.io Blog](https://www.hackster.io/salvof/henhouse-1679da)
