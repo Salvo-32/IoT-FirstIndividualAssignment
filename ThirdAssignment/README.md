@@ -145,6 +145,9 @@ To show the following result, the following shell commands are used (which belon
 4. ```temperature_thread()``` and ```light_thread()``` contribution appears between two consecutive 0.284 W peaks, with an average value of 0.273 W
 5. Such a star LoRa Network topology brings a dangerous drawback, that is deploying one single LoRa Gaetweay. Namely, if it fails then there is no communication between both networks, therefore it would be better to foresee back-up LoRa basic stations. These ones would grant fault-tolerance by replication and stability
 
+## Hands-on walkthrough
+Using the following [instruction file](./Firmware/LoRa-Henhouse_Commands.txt), it is possible to run the assignment
+
 ## Sources
 1. https://iot-lab.github.io/docs/boards/st-b-l072z-lrwan1/
 2. https://www.st.com/en/ecosystems/x-nucleo-iks01a2.html - Sensor Exapansion Board for STM32 Boards
