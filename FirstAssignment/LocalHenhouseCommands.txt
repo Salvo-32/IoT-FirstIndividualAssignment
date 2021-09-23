@@ -1,0 +1,85 @@
+//MQTT Broker + Bridge with AWS
+sudo apt-get install mosquitto
+sudo service mosquitto stop
+nano EclipseMosquitto_bridge.conf
+	# ============================================================
+	# Bridge to AWS IOT
+	# ============================================================
+
+	connection awsiot
+
+	#<Paste your AWS IoT Core ATS endpoint retrieved from the AWS CLI in the form of xxxxxxxxxxxxxxx-ats.iot.<region>.amazonaws.com:8883
+	address a2ltfi1iwu8oyf-ats.iot.us-east-1.amazonaws.com:8883
+
+	# Specifying which topics are bridged and in what fashion
+	#	Sensors require only to send out message
+	topic sensor/light out 1
+	topic sensor/temp out 1
+
+	#	Actuators require both to send messages and receive ones from Web-based Dashboard
+	topic actuator/lamp both 1
+	topic actuator/buzzer both 1
+	topic actuator/fan both 1
+
+	# Setting protocol version explicitly
+	bridge_protocol_version mqttv311
+	bridge_insecure false
+
+	# Bridge connection name and MQTT client Id, enabling the connection automatically when the broker starts.
+	cleansession true
+	clientid bridgeawsiot
+	start_type automatic
+	notifications false
+	log_type all
+	
+	# ============================================================
+	# Certificate based SSL/TLS support
+	# ============================================================
+
+	#Path to the rootCA
+	bridge_cafile /etc/mosquitto/certs/root-CA.crt
+	
+	# Path to the PEM encoded client certificate
+	bridge_certfile /etc/mosquitto/certs/MyUbuntu.cert.pem
+	
+	# Path to the PEM encoded client private key
+	bridge_keyfile /etc/mosquitto/certs/MyUbuntu.private.key
+	
+	#END of bridge.conf
+	# ============================================================
+cp EclipseMosquitto_bridge.conf /etc/mosquitto/conf.d/bridge.conf
+sudo service mosquitto start
+
+// MQTT-S broker + Bridge with MQTT Broker
+cd /home/salvo/mosquitto.rsmb/rsmb/src/
+nano config.conf
+	# add some debug output
+	trace_output protocol
+
+	# listen for MQTT-SN traffic on UDP port 1885
+	listener 1885 INADDR_ANY mqtts
+	  ipv6 true
+
+	# listen to MQTT connections on tcp port 1886
+	listener 1886 INADDR_ANY
+	  ipv6 true
+
+	# MQTT-S outgoing local bridge between MQTT-S Broker and MQTT Broker
+	connection local_bridge_to_MQTT-EclipseMosquitto
+	address 127.0.0.1:1883
+
+	#	Sensors require only to send out message
+	topic sensor/light out
+	topic sensor/temperature out
+
+	#	 Actuators require both to send messages and receive ones from Web-based Dashboard
+	topic actuator/lamp both
+	topic actuator/buzzer both
+	topic actuator/fan both
+	
+./broker_mqtts config.conf
+// In case of need you can kill previous broker_mqtts executions: kill -s QUIT 13502
+
+// Local board
+cd /home/salvo/Desktop/IoT/IndividualAssignment/01/Firmware/01/
+make flash term
