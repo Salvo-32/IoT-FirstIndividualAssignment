@@ -1,9 +1,9 @@
-# IoT First individual assignment - Henhouse - Salvatore FAVA
+# IoT First individual assignment - Henhouse
 The aim of this assignment is to create an AWS based IoT system that senses the environment through temperature and light sensors and reacts using buzzer, fan and lamp.
 
 ## What is the problem and why do you need IoT?
 ### The problem 
-A hen house is a building where poultry is bred in order to produce meat and eggs. Nowadays a small eco-friendly structure (with fewer than 100 poultry) has to consider three main factors:
+A hen house is a building where poultry is bred in order to produce meat and eggs. Nowadays a small eco-friendly structure (with fewer than 100 poultry) has to consider three ù factors:
 - the free movement of the animals inside the building;
 - the use of solar light for the heating;
 - the introduction of artificial lighting to regulate the circadian cycle (sleeping and waking cycle).
@@ -100,7 +100,7 @@ In order to **clearly understand** how the physical devices and software compone
 Here there is a complete list of all software components underlying the above-mentioned hardware architecture, from left most devices to the bottom right devices.
 
 #### RiotOS and C-application 
-[RiotOS](#STM32-Nucleo-64-development-board-and-RIOT-OS) runs inside the ST Nucleo board that executes a C application with a MQTT-SN client: [main.c](main.c)
+[RiotOS](#STM32-Nucleo-64-development-board-and-RIOT-OS) runs inside the ST Nucleo board that executes a C application with a MQTT-SN client: [main.c](Firmware/main.c)
 1. The C application retrieves periodically data from the two sensors using two different dedicated threads, realizing the 'sense' phase of **sense-think-act** 
 2. Consequently, it realizes the 'think' phase of **sense-think-act** paradigm in two ways: 
     * First it encapsulates the data into MQTT JSON messages and sends them via MQTT-SN client [emCute](http://api.riot-os.org/group__net__emcute.html) to the RSMB MQTT-S broker. 
