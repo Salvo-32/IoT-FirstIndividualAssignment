@@ -1,5 +1,5 @@
 # IoT First individual assignment - Henhouse - Salvatore FAVA
-The aim of this assignment is to create an AWS based IoT system that senses the environment through temperature and light sensors above-mentioned and react using buzzer, fan and lamp.
+The aim of this assignment is to create an AWS based IoT system that senses the environment through temperature and light sensors and react using buzzer, fan and lamp.
 
 ## What is the problem and why do you need IoT?
 ### The problem 
