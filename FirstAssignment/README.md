@@ -70,15 +70,15 @@ This sensor is wired connected to the STM Nucleo board as in the picture below.
 
 ### Actuators
 1. Active buzzer (Buzzer RS PRO 171-0898) [RS Components Website](https://it.rs-online.com/web/p/buzzer-magnetici/1710898/)
-    - A buzzer, also named beeper, is an electronic devices used to emit a fixed sound whenever it is powered on. 
-    - In details, this project involves an electromagnetic buzzer that lets out a constant tone (85 dB)
-    - The actuator is wired connected to the [STM Nucleo](#STM32-Nucleo-64-development-board-and-RIOT-OS) board as in the picture below.
-    - As described in [The problem and IoT need](#The-problem) section, the whole system makes use of the buzzer to acoustically inform the farmer about high temperature inside the poultry. Remember according the temperature sensor data, the buzzer is turned on or off.    
+   - A buzzer, also named beeper, is an electronic devices used to emit a fixed sound whenever it is powered on. 
+   - In details, this project involves an electromagnetic buzzer that lets out a constant tone (85 dB)
+   - The actuator is wired connected to the [STM Nucleo](#STM32-Nucleo-64-development-board-and-RIOT-OS) board as in the picture below.
+   - As described in [The problem and IoT need](#The-problem) section, the whole system makes use of the buzzer to acoustically inform the farmer about high temperature inside the poultry. Remember according the temperature sensor data, the buzzer is turned on or off.    
 2. Relay Module with Optocoupler (8 Channels) [Elegoo Website](https://www.elegoo.com/collections/electronic-component-kits/products/elegoo-8-channel-relay-module-kit?variant=32467576324144)
-    - The relay module is an electrically operated switch that allows you to turn on or off a circuit with a voltage and/or current that is much higher than a microcontroller could handle. 
-    - There is no connection between the low voltage circuit operated by the microcontroller and the high power circuit. The relay protects each circuit from the other.
-    - This actuator is wired connected to the [STM Nucleo](#STM32-Nucleo-64-development-board-and-RIOT-OS) board as in the picture below. First channel is devoted to the cooling fan and second channel to lamp.
-    - As described in [The problem and IoT need](#The-problem) section, the relay is employed to separately activate both the cooling fan and the lamp. The former lowers the temperature whenever this one is above the threshold (24°C) while the latter keeps the illuminance constant (1.5 lux) whenever this one is below the threshold (<1.5 lux). Rememeber according to the processed temperature data the cooling fan is turned on or off and according to processed brigthness data the lamp is switched on or off. 
+   - The relay module is an electrically operated switch that allows you to turn on or off a circuit with a voltage and/or current that is much higher than a microcontroller could handle. 
+   - There is no connection between the low voltage circuit operated by the microcontroller and the high power circuit. The relay protects each circuit from the other.
+   - This actuator is wired connected to the [STM Nucleo](#STM32-Nucleo-64-development-board-and-RIOT-OS) board as in the picture below. First channel is devoted to the cooling fan and second channel to lamp.
+   - As described in [The problem and IoT need](#The-problem) section, the relay is employed to separately activate both the cooling fan and the lamp. The former lowers the temperature whenever this one is above the threshold (24°C) while the latter keeps the illuminance constant (1.5 lux) whenever this one is below the threshold (<1.5 lux). Rememeber according to the processed temperature data the cooling fan is turned on or off and according to processed brigthness data the lamp is switched on or off. 
 
 ### STM32 Nucleo-64 development board and RIOT-OS
 The core of the whole system is [STM NUCLEO-F401RE](https://www.st.com/en/evaluation-tools/nucleo-f401re.html) development board. It allows to build a prototype of the real system within an affordable all-in-one platform (ST-LINK debugger/programmer are included).
