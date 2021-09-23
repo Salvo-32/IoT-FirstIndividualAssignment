@@ -25,13 +25,13 @@ Deploying multiple [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/
    3. Moreover the possibility to perform aggregated computations for a specific physical property, through data coming from different positions at the same time, protects against wrong measurement values.
       * In other words if you can trust the majority of the sensor values then even if there are few abnormal values, the outcome is still a reliable one (arithmetic mean).
 3. Energy efficiency
-   1. In accordance with the [network diagram](###Network-diagram-(Physical-devices-and-Protocols)) of this assignment ```m3-1.saclay``` acts as Border router, namely allows to exchange (route) messages between the multi-hop wireless network and the world-wide network, while remaining nodes ```m3-1.saclay``` - ```m3-12.saclay``` are End points, namely produce data only and send it over the wireless sensor network. It is clear energy consumption is pretty different according to the role of the node: 
+   1. In accordance with the [network diagram](#Network-diagram-(Physical-devices-and-Protocols)) of this assignment ```m3-1.saclay``` acts as Border router, namely allows to exchange (route) messages between the multi-hop wireless network and the world-wide network, while remaining nodes ```m3-1.saclay``` - ```m3-12.saclay``` are End points, namely produce data only and send it over the wireless sensor network. It is clear energy consumption is pretty different according to the role of the node: 
       * Border router routes, distributes/issues network parameters to End points, meanwhile produce data, therefore it requires the highest energy requirement
       * End points, on the other hand, deal with sensing physical quantities sending over the network, therefore the lowest energy level is required 
 ### Disadvantages of a multi-hop wireless network
 1. Throughput.
-   1. As stated in the introduction of this section, deploying multiple boards entails deal with a bigger amount of data wrt first individual assignment
-   2. Dealing with such an amount of information within a multi-hop wireless network, see [network diagram](./README.md/###Network-diagram-(Physical-devices-and-Protocols)), like the one in this system is less advantageous in term of number of exchanged packets per second. Since packets are forwarded from end point to border router through repeater nodes, then the number of packets per second is affected from each node performance. Poor intermediary node capabilities could low the whole network throughput, as well as, the End-to-End delay
+   1. As stated in the introduction of this section, deploying multiple boards implies to deal with a bigger amount of data wrt first individual assignment
+   2. Dealing with such an amount of information within a multi-hop wireless network, see [network diagram](#Network-diagram-(Physical-devices-and-Protocols)), like the one in this system is less advantageous in term of number of exchanged packets per second. Since packets are forwarded from end point to border router through repeater nodes, then the number of packets per second is affected from each node performance. Poor intermediate node capabilities could low the whole network throughput, as well as, the End-to-End delay
 2. Security
    1. Because of the need for intermediate nodes to forward packet toward its intended destination, every packet is vulnerable with respect to its intermediaries
    2. Indeed these nodes could perform whatever function/computation in the packet, altering its content, replacing it entirely, or deviating it from the intended destination. 
@@ -45,19 +45,19 @@ The following diagram depicts all the physical devices employed in this project 
 **NOTE** First individual assignment's network components are neither depicted again in the diagram above nor these are taken into account in the description below. (Look at the appropriate [document](/FirstAssignment/README.md/####-Network-diagram-(Physical-devices-and-Protocols)))
 
 From RIGHT to LEFT:
-1. All the available m3 boards on Saclay site, which act as follow:
+1. All the available m3 boards on Saclay site act as follow:
    1. ```m3-1.saclay``` acts as Border router namely it makes use of both 802.15.4 network technologies and 6LowPAN to interact with endpoints/simple nodes. Moreover like in the first assignment it uses an attached device/computer (in this case a mini-computer called Gateway (GW)) through ```ethos``` + ```UHCP``` to reach the IP network by FIT IoT-LAB. In fact as reported at [FIT IoT-LAB - Testbed Design](https://www.iot-lab.info/docs/getting-started/design/) each experimentation board called Open Node (ON) is integrated with a mini-computer called Gateway (GW), which in turn provide tools to evaluate BOARD performance and give access to the FIT IoT-LAB network.
-   2. ```m3-2.saclay``` - ```m3-11.saclay```board as end-points or single nodes. 
-      1. They sense temperature and light as in the previous assignment with same sampling rate, but using the integrated sensors ***LPS331AP*** and ***ISL29020*** Both the [IoT-LAB M3 web-page](https://www.iot-lab.info/docs/boards/iot-lab-m3/) and this [Official Jupyter Notebook](https://github.com/iot-lab/iot-lab-training/tree/master/riot/basics/sensors)) by FIT Iot-LAB provide detailed information about these two sensors and how to use them in [RIOT-OS](www.riot-os.org)
-      2. Publish these values using MQTTS messages using 802.15.4 network interface within the 6LowPAN network.
+   2. ```m3-2.saclay``` - ```m3-11.saclay```board act as end-points or single nodes. 
+      1. They sense temperature and light as in the previous assignment with same sampling rate, but using the integrated sensors ***LPS331AP*** and ***ISL29020***. Both the [IoT-LAB M3 web-page](https://www.iot-lab.info/docs/boards/iot-lab-m3/) and this [Official Jupyter Notebook](https://github.com/iot-lab/iot-lab-training/tree/master/riot/basics/sensors)) by FIT Iot-LAB provide detailed information about these two sensors and how to use them in [RIOT-OS](www.riot-os.org)
+      2. They publish these values using MQTTS messages over 802.15.4 network interface within the 6LowPAN network.
       3. Hop-by-hop (node-by-node) MQTTS messages eventually reach first final destination: the Border router
 2. [IoT-LAB A8-M3](https://www.iot-lab.info/docs/boards/iot-lab-a8-m3/), which behaves as the Ubuntu Laptop from the first assignment
-   1. It is an MQTTS broker (RSMB) that receives insecure messages from the wireless mesh network endpoints, in turn bridged (transparent bridge) to the Eclipse Mosquitto MQTT Broker
-   2. It is an MQTT broker (Eclipse Mosquitto) that receive insecure messages from RSMB and forward them using TLS toward Amazon MQTT broker
+   1. It is an MQTTS broker (RSMB) that receives insecure messages from the wireless mesh network endpoints, in turn it is bridged (transparent bridge) to the Eclipse Mosquitto MQTT Broker
+   2. As well, it is an MQTT broker (Eclipse Mosquitto) that receives insecure messages from RSMB and forward them using TLS toward Amazon MQTT broker
 3. Amazon AWS MQTT broker, same as previous assignment, which exchange MQTT(TLS) messages with the above-mentioned [IoT-LAB A8-M3](https://www.iot-lab.info/docs/boards/iot-lab-a8-m3/)
 4. Frontend devices and Web-dashboard that exchange requests and responses using HTTPS, same as previous assignment
  
-In order to clearly understand how the physical devices and software components work together look at paragraph Overall high-level architecture diagram of the whole system
+In order to clearly understand how the physical devices and software components work together look at paragraph below.
 
 ### Overall high-level architecture diagram of Software components
 This section shows inter-dependencies among the different software components. While the same paragraph of the first assignment provides a detailed description of each single software, here only new components are described 
@@ -69,36 +69,36 @@ This section shows inter-dependencies among the different software components. W
       * They rely on different network parameters (different local mqtts broker port and address), moreover different networks technology and topology
 2. The example firmware ```RIOT gnrc_border_router``` as it is described at [Official RIOT-OS GitHub repository](https://github.com/RIOT-OS/RIOT/tree/master/examples/gnrc_border_router), runs on top of the above-mentioned ```m3-1.saclay``` Border router
    * One change with respect to the official tutorial concerns how to build the offcial source code: ```make ETHOS_BAUDRATE=500000 BOARD=iotlab-m3 ```. That value of baudrate comes from the intrinsic UART baudrate of M3 with which the board reaches the IP Network by IoT-LAB.
-
+   
 3. Yocto OS + Eclipse RSMB + Eclipse Mosquitto run on top of [IoT-LAB A8-M3](https://www.iot-lab.info/docs/boards/iot-lab-a8-m3/) board, like in the previous asignment
    * **NOTE** Yocto OS replace Ubuntu 20.04 of the first assignment, but behaves just like before. The [Yocto Project](https://www.iot-lab.info/docs/os/yocto/) is an open-source project which allows the creation of embedded Linux distributions. The project was announced by the Linux Foundation in 2010 and launched in March, 2011, in collaboration with 22 organizations. 
 4. AWS Webservices
    1. AWS IoT Core adds a new Thing ```FITIoT-Lab```, which grants access to AWS IoT Core webservices using a new dedicated set of keys and certificates. 
-      * To allow the local nucleo board and m3 boards access AWS IoT core at the same time, two different set of keys and certificates are rquired (One for each Thing)
+      * To allow the local nucleo board and m3 boards access AWS IoT core at the same time, two different sets of keys and certificates are rquired (One for each Thing)
       * Although current repository provides keys and certificates to access my Amazon AWS account at [Firmware/MqttBrokerBridge](./Firmware/MqttBrokerBridge) folder, these are currently not allowed from my personal account. If you want to try the whole system functioning, please contact me at ***Salvo.f96@gmail.com*** ![IotCoreThings](./Picture/IotCoreThings.png)
       
       * IoT Rules (Temperature and Light rule) are the same as before
    4. AWS DynamoDB the same as before
-   5. AWS S3 hosts a new version of web-dashboard ```index2.html```, more additional details about its source code are provided below ![S3Bucket](./Picture/S3Bucket.png)
+   5. AWS S3 hosts a new version of web-dashboard ```index2.html```, more additional details about its source code are provided in the next point (5) ![S3Bucket](./Picture/S3Bucket.png)
 5.  Web-dashboard is a newer version which works with HTML5 and JS
    * It relies on [AWS JS SDK](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/) only (more efficient than previous version with Lambda)! 
    * Using this SDK the dashboard make use of Amazon Cognito (as in the previous assignment) in order to access/authenticate AWS Webservices 
    * Using this SDK the dashboard interacts with DynamoDB, to retrieve temperature and light values
-   * Using this SDK the dashboard to send MQTT message to Amazon AWS broker to interact with specifid actuaturs and devices
-   * All the aggreagted computation (avg, min, max) are performed on the client side using JS functions
+   * Using this SDK the dashboard to send MQTT message to Amazon AWS broker to interact with specified actuaturs and devices
+   * All the aggreagted computations (avg, min, max) are performed on the client side using JS functions
    * Further information about the source code are available at [index2.html](./Frontend/index2.html) 
    * The following screenshot shows the current version of the Dashboard ![index2](./Picture/index2.png)  
 
 ## How do you measure the performance of the system
 Each of the following points measure the performance of the whole IoT system in term of Energy efficiency (Power/Current/Voltage monitoring) and Wireless channel analysis, as the number of wireless node increase and consequently their physical locations vary. 
-1. Power monitoring follows the official [Consumption monitoring guidelines](https://www.iot-lab.info/docs/tools/consumption-monitoring/) by FIT IoT-LAB, , please look at it to set up monitoring activity ![A8PowerMonitoring1](./Evaluation/Picture/A8PowerMonitoring1.png)
+1. Power monitoring follows the official [Consumption monitoring guidelines](https://www.iot-lab.info/docs/tools/consumption-monitoring/) by FIT IoT-LAB, please look at it to set up monitoring activity ![A8PowerMonitoring1](./Evaluation/Picture/A8PowerMonitoring1.png)
 3. Wireless channel analysis follows the official [Radio monitoring guidelines](https://www.iot-lab.info/docs/tools/radio-monitoring/) by FIT IoT-LAB, please look at it to set up monitoring activity ![M3Monitoring1](./Evaluation/Picture/M3Monitoring1.png)
-4. Here there is the list used to set up profiles above  (they take place at fava@saclay):
+4. Here there is the list used to set up profiles above (they take place at fava@saclay):
    1. ```iotlab-profile adda8 -n A8PowerMonitoring1 --power dc -voltage -current -power -period 8244 -avg 4```
    2. ```iotlab-profile addm3 -n M3Monitoring1 --power dc -voltage -current -power -period 8244 -avg 4 -rssi -channels 22 26 -num 1 -rperiod 1000```
 5. Power monitoring concerns both A8 node and M3 nodes, while Wireless channel analysis concerns M3 boards only since they are the only one using 802.15.4 wireless technology
-6. For each experiment, wireless channel employed is the **26** one for every m3 board (Multi-hop wireless network) and it is GRAPHICALLY evaluated only at Border router because all the wireless devices make use of the same channel.. Textual results are available at [Evaluation folder](./Evaluation) of this repository, and they include channel analysis for endpoints.
-7.Next sections carry out graphical outcomes about the monitoring activities, for each node. 
+6. For each experiment, wireless channel employed is the **26** one for every m3 board (Multi-hop wireless network) and it is GRAPHICALLY evaluated only at Border router because all the wireless devices make use of the same channel. Textual results are available at [Evaluation folder](./Evaluation) of this repository, and they include channel analysis for endpoints.
+7.Next sections carry out graphical outcomes from the monitoring activities, for each node. 
 
 ### Experiment 272564 - 5 wireless nodes 
 The IoT-LAB experiment 272564 takes place in Saclay site, involving:
@@ -147,7 +147,6 @@ To show the following result the following shell command are used:
 1. As you can infer from the graphs above as the number of wireless nodes increases ```m3-1.saclay``` border router's power consumption increases. In particular, its first power consumption graph (m3-1.saclay) shows few peaks around 0.12 W with an average value of 0.11 W, conversely the second one shows much more peaks around 0.14 W and an average values of 0.12 W.
 2. Since during both experiments there were not running experiments on Saclay site, border router's wireless channel analysis shows an RSSI near -91 dBm without noise. This means transceiver were able to exchange data without external noise in that frequency band (channel 26). Nevertheless depending on the radio environment perturbations, you could measure worse RSSI values with relative noise, that will damage wireless links.
 3. As stated in the [Disadvantages of a multi-hop wireless network](./README.md#disadvantages-of-a-multi-hop-wireless-network) above, deploying multiple IoT-LAB M3 boards, surely implies a bigger amount of data available to be handled. It is absolutely clear looking at both the graphs of MQTTS/MQTT broker ```a8-2.saclay```, they show an harder power consumption activity that grows as the number of MQTTS message grows (second experiment)
-
 
 ## Hands-on walkthrough
 Using the following [instruction file](./HandsOnWalkthrough.md), it is possible to run the assignment
