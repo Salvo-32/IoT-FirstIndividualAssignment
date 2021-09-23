@@ -25,13 +25,13 @@ Deploying multiple [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/
    3. Moreover the possibility to perform aggregated computations for a specific physical property, through data coming from different positions at the same time, protects against wrong measurement values.
       * In other words if you can trust the majority of the sensor values then even if there are few abnormal values, the outcome is still a reliable one (arithmetic mean).
 3. Energy efficiency
-   1. In accordance with the [network diagram](#Network-diagram-(Physical-devices-and-Protocols)) of this assignment ```m3-1.saclay``` acts as Border router, namely allows to exchange (route) messages between the multi-hop wireless network and the world-wide network, while remaining nodes ```m3-1.saclay``` - ```m3-12.saclay``` are End points, namely produce data only and send it over the wireless sensor network. It is clear energy consumption is pretty different according to the role of the node: 
+   1. In accordance with the [network diagram](#network-diagram-physical-devices-and-protocols) of this assignment ```m3-1.saclay``` acts as Border router, namely allows to exchange (route) messages between the multi-hop wireless network and the world-wide network, while remaining nodes ```m3-1.saclay``` - ```m3-12.saclay``` are End points, namely produce data only and send it over the wireless sensor network. It is clear energy consumption is pretty different according to the role of the node: 
       * Border router routes, distributes/issues network parameters to End points, meanwhile produce data, therefore it requires the highest energy requirement
       * End points, on the other hand, deal with sensing physical quantities sending over the network, therefore the lowest energy level is required 
 ### Disadvantages of a multi-hop wireless network
 1. Throughput.
    1. As stated in the introduction of this section, deploying multiple boards implies to deal with a bigger amount of data wrt first individual assignment
-   2. Dealing with such an amount of information within a multi-hop wireless network, see [network diagram](#Network-diagram-(Physical-devices-and-Protocols)), like the one in this system is less advantageous in term of number of exchanged packets per second. Since packets are forwarded from end point to border router through repeater nodes, then the number of packets per second is affected from each node performance. Poor intermediate node capabilities could low the whole network throughput, as well as, the End-to-End delay
+   2. Dealing with such an amount of information within a multi-hop wireless network, see [network diagram](#network-diagram-physical-devices-and-protocols), like the one in this system is less advantageous in term of number of exchanged packets per second. Since packets are forwarded from end point to border router through repeater nodes, then the number of packets per second is affected from each node performance. Poor intermediate node capabilities could low the whole network throughput, as well as, the End-to-End delay
 2. Security
    1. Because of the need for intermediate nodes to forward packet toward its intended destination, every packet is vulnerable with respect to its intermediaries
    2. Indeed these nodes could perform whatever function/computation in the packet, altering its content, replacing it entirely, or deviating it from the intended destination. 
@@ -42,7 +42,7 @@ Deploying multiple [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/
 The following diagram depicts all the physical devices employed in this project and relative network protocols used to interconnect each other
 ![PhysicalNetworkDiagram](./Picture/PhysicalNetworkDiagram.jpg)
 
-**NOTE** First individual assignment's network components are neither depicted again in the diagram above nor these are taken into account in the description below. (Look at the appropriate [document](/FirstAssignment/README.md/####-Network-diagram-(Physical-devices-and-Protocols)))
+**NOTE** First individual assignment's network components are neither depicted again in the diagram above nor these are taken into account in the description below. (Look at the appropriate [document](#network-diagram-physical-devices-and-protocols)
 
 From RIGHT to LEFT:
 1. All the available m3 boards on Saclay site act as follow:
@@ -146,7 +146,7 @@ To show the following result the following shell command are used:
 ### Conclusion
 1. As you can infer from the graphs above as the number of wireless nodes increases ```m3-1.saclay``` border router's power consumption increases. In particular, its first power consumption graph (m3-1.saclay) shows few peaks around 0.12 W with an average value of 0.11 W, conversely the second one shows much more peaks around 0.14 W and an average values of 0.12 W.
 2. Since during both experiments there were not running experiments on Saclay site, border router's wireless channel analysis shows an RSSI near -91 dBm without noise. This means transceiver were able to exchange data without external noise in that frequency band (channel 26). Nevertheless depending on the radio environment perturbations, you could measure worse RSSI values with relative noise, that will damage wireless links.
-3. As stated in the [Disadvantages of a multi-hop wireless network](./README.md#disadvantages-of-a-multi-hop-wireless-network) above, deploying multiple IoT-LAB M3 boards, surely implies a bigger amount of data available to be handled. It is absolutely clear looking at both the graphs of MQTTS/MQTT broker ```a8-2.saclay```, they show an harder power consumption activity that grows as the number of MQTTS message grows (second experiment)
+3. As stated in the [Disadvantages of a multi-hop wireless network](#disadvantages-of-a-multi-hop-wireless-network) above, deploying multiple IoT-LAB M3 boards, surely implies a bigger amount of data available to be handled. It is absolutely clear looking at both the graphs of MQTTS/MQTT broker ```a8-2.saclay```, they show an harder power consumption activity that grows as the number of MQTTS message grows (second experiment)
 
 ## Hands-on walkthrough
 Using the following [instruction file](./HandsOnWalkthrough.md), it is possible to run the assignment
