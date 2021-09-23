@@ -173,7 +173,7 @@ In order to clearly understand how the physical devices and software components 
 
 
 ## Hands-on walkthrough
-Using the following [instruction file](./HandsOnWalkthrough.md), it is possible to run the assignment
+Using the following [instruction file](./LocalHenhouseCommands.txt), it is possible to run the assignment
 
 ## Sources
 * https://www.agraria.org/polli/ricoveri.htm
