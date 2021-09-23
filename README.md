@@ -1,7 +1,7 @@
 # IoT IndividualAssignments
 ## A.Y 2020/2021 - Uniroma1
 
-The repository contains three individual assignments that shares the same envirnomental scenario: Management of a henhouse
+The repository contains three individual assignments that shares the same envirnomental scenario: Management of a henhouse.
 Each assignment deals with different IoT technologies learnt during the above mentioned IoT course.
 
 For further information about the assignments refer to the links below
