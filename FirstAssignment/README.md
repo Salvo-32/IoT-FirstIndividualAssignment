@@ -171,6 +171,10 @@ In order to clearly understand how the physical devices and software components 
 ### Overall high-level architecture diagram of Software components
 ![OverallArchitecture](Picture/OverallArchitecture.jpg)
 
+
+## Hands-on walkthrough
+Using the following [instruction file](./HandsOnWalkthrough.md), it is possible to run the assignment
+
 ## Sources
 * https://www.agraria.org/polli/ricoveri.htm
 * https://www.poultryledlights.com/
