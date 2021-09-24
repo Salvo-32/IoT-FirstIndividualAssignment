@@ -31,9 +31,9 @@ Deploying multiple [IoT-LAB M3](https://www.iot-lab.info/docs/boards/iot-lab-m3/
 ### Disadvantages of a multi-hop wireless network
 1. Throughput.
    1. As stated in the introduction of this section, deploying multiple boards implies to deal with a bigger amount of data wrt first individual assignment
-   2. Dealing with such an amount of information within a multi-hop wireless network, see [network diagram](#network-diagram-physical-devices-and-protocols), like the one in this system is less advantageous in term of number of exchanged packets per second. Since packets are forwarded from end point to border router through repeater nodes, then the number of packets per second is affected from each node performance. Poor intermediate node capabilities could low the whole network throughput, as well as, the End-to-End delay
+   2. Dealing with such an amount of information within a multi-hop wireless network, see [network diagram](#network-diagram-physical-devices-and-protocols), like the one in this system is less advantageous in term of number of exchanged packets per second. Since packets are forwarded from end point to border router through repeater nodes, then the number of packets per second is affected from each node performance. Poor intermediary node capabilities could low the whole network throughput, as well as, the End-to-End delay
 2. Security
-   1. Because of the need for intermediate nodes to forward packet toward its intended destination, every packet is vulnerable with respect to its intermediaries
+   1. Because of the need for intermediary nodes to forward packet toward its intended destination, every packet is vulnerable with respect to its intermediaries
    2. Indeed these nodes could perform whatever function/computation in the packet, altering its content, replacing it entirely, or deviating it from the intended destination. 
    3. In order to avoid wrong behaviors as much as possible, different techniques (CRC, hash functions) should be undertaken
 
